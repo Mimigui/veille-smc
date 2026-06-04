@@ -8,64 +8,70 @@ export default async function handler(req, res) {
   if (!apiKey) return res.status(500).json({ error: 'Clé API manquante' });
 
   const sources = mode === 'cabinets'
-    ? 'Consultor (consultor.fr), LinkedIn, Financial Times, Les Echos, sites officiels des cabinets'
-    : 'sites officiels des écoles, LinkedIn, Financial Times (ft.com), Les Echos (lesechos.fr)';
+    ? 'Consultor, LinkedIn, Financial Times, Les Echos, sites officiels des cabinets'
+    : 'sites officiels des écoles, LinkedIn, Financial Times, Les Echos';
 
-  // Étape 1 : recherche web
-  const searchPrompt = `Fais une recherche web sur: ${user}. Sources prioritaires: ${sources}. Langues: FR, EN, IT, DE, ES.`;
+  const call = async (body) => {
+    const r = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01' },
+      body: JSON.stringify(body),
+    });
+    if (!r.ok) throw new Error(`API ${r.status}: ${await r.text()}`);
+    return r.json();
+  };
 
   try {
-    const r1 = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01' },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5',
-        max_tokens: 1000,
-        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-        messages: [{ role: 'user', content: searchPrompt }],
-      }),
+    // Étape 1 : recherche web
+    const d1 = await call({
+      model: 'claude-haiku-4-5',
+      max_tokens: 800,
+      tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+      messages: [{ role: 'user', content: `Recherche actualités 2024-2025 sur: ${user}. Sources: ${sources}. Langues: FR EN IT DE ES. Donne les faits bruts.` }],
     });
 
-    if (!r1.ok) {
-      const txt = await r1.text();
-      return res.status(502).json({ error: `Erreur API (${r1.status}): ${txt}` });
+    const rawText = (d1.content || [])
+      .filter(b => b.type === 'text')
+      .map(b => b.text)
+      .join('\n')
+      .slice(0, 2500);
+
+    if (!rawText || rawText.length < 20) {
+      return res.status(200).json({ resultats: [{ nom: '', badge: 'Actualité', titre: 'Aucun résultat', date: '2025', source: '', resume: 'Aucune information trouvée.' }] });
     }
 
-    const d1 = await r1.json();
-    const rawText = (d1.content || []).filter(b => b.type === 'text').map(b => b.text).join('\n');
+    // Étape 2 : formatage JSON strict
+    const d2 = await call({
+      model: 'claude-haiku-4-5',
+      max_tokens: 600,
+      messages: [{
+        role: 'user',
+        content: `À partir de ce texte, extrais les actualités distinctes et retourne UNIQUEMENT ce JSON (pas d'autre texte) :
+{"resultats":[{"nom":"nom court du programme ou cabinet","badge":"Programme","titre":"titre bref","date":"mois année","source":"nom source","resume":"1-2 phrases en français"}]}
 
-    // Étape 2 : formater en JSON
-    const r2 = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01' },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5',
-        max_tokens: 800,
-        system: 'Tu es un formateur JSON. Tu reçois des informations de veille et tu les formates en JSON. Tu réponds UNIQUEMENT avec le JSON demandé, sans texte avant ni après, sans markdown, sans backticks.',
-        messages: [{
-          role: 'user',
-          content: `Formate ces informations de veille en JSON. Chaque actualité distincte devient un élément. Badge = "Programme" pour les écoles, "Recrutement" pour le recrutement, "Actualité" sinon. Résumés en français.\n\nFormat strict:\n{"resultats":[{"nom":"nom court","badge":"Programme","titre":"titre actu","date":"mois année","source":"nom source","resume":"2 phrases en français"}]}\n\nInformations:\n${rawText.slice(0, 3000)}`
-        }],
-      }),
+Badge = "Programme" pour écoles/masters, "Recrutement" pour recrutement/emploi, "Actualité" pour reste.
+Texte source :
+${rawText}`
+      }],
     });
 
-    if (!r2.ok) {
-      const txt = await r2.text();
-      return res.status(502).json({ error: `Erreur formatage (${r2.status}): ${txt}` });
-    }
+    const raw2 = (d2.content?.find(b => b.type === 'text')?.text || '')
+      .replace(/```json|```/g, '').trim();
 
-    const d2 = await r2.json();
-    const jsonText = (d2.content?.find(b => b.type === 'text')?.text || '').replace(/```json|```/g, '').trim();
-    const match = jsonText.match(/\{[\s\S]*"resultats"[\s\S]*\}/);
-
+    const match = raw2.match(/\{[\s\S]*"resultats"[\s\S]*\}/);
     if (match) {
       try {
-        return res.status(200).json(JSON.parse(match[0]));
+        const parsed = JSON.parse(match[0]);
+        if (parsed.resultats?.length) return res.status(200).json(parsed);
       } catch {}
     }
 
+    // Fallback : afficher le texte brut découpé en paragraphes
+    const lines = rawText.split('\n').filter(l => l.trim().length > 40).slice(0, 5);
     return res.status(200).json({
-      resultats: [{ nom: '', badge: 'Actualité', titre: 'Résultats de veille', date: '2025', source: '', resume: rawText.slice(0, 400) }]
+      resultats: lines.map((l, i) => ({
+        nom: '', badge: 'Actualité', titre: `Résultat ${i + 1}`, date: '2025', source: '', resume: l.slice(0, 200)
+      }))
     });
 
   } catch (err) {
