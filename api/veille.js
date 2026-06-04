@@ -8,22 +8,56 @@ export default async function handler(req, res) {
   if (!apiKey) return res.status(500).json({ error: 'Clé API manquante' });
 
   const sources = mode === 'cabinets'
-    ? 'sites officiels des cabinets, Consultor (consultor.fr), LinkedIn, Financial Times, Les Echos'
-    : 'sites officiels des écoles, LinkedIn, Financial Times (ft.com), Les Echos (lesechos.fr)';
+    ? 'Consultor, LinkedIn, Financial Times, Les Echos, sites officiels des cabinets'
+    : 'sites officiels des écoles, LinkedIn, Financial Times, Les Echos';
 
-  const systemPrompt = `Tu es un agent de veille pour la directrice du MSc SMC de SKEMA Business School.
-Fais une recherche web sur la demande. Sources à privilégier: ${sources}.
-Langues: français, anglais, italien, allemand, espagnol. Résumés toujours en français.
-Après la recherche, réponds STRICTEMENT avec ce JSON et rien d'autre:
-{"resultats":[{"nom":"nom court","badge":"Programme","titre":"titre actu","date":"mois année","source":"nom source","resume":"2 phrases en français"}]}
-Pas de texte avant, pas de texte après, pas de markdown, pas de backticks. Uniquement le JSON.`;
-
-  const tools = [{ type: 'web_search_20250305', name: 'web_search' }];
-  let messages = [{ role: 'user', content: user }];
+  const systemPrompt = `Tu es un agent de veille pour la directrice du MSc SMC de SKEMA.
+Fais une recherche web sur: ${user}
+Sources: ${sources}. Langues: FR, EN, IT, DE, ES. Résumés en français.
+Réponds UNIQUEMENT avec ce JSON valide (pas de texte avant/après, pas de markdown):
+{"resultats":[{"nom":"nom","badge":"Programme","titre":"titre","date":"mois 2024 ou 2025","source":"source","resume":"2 phrases"}]}`;
 
   try {
-    for (let i = 0; i < 10; i++) {
-      const r = await fetch('https://api.anthropic.com/v1/messages', {
+    const r = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5',
+        max_tokens: 1000,
+        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+        system: systemPrompt,
+        messages: [{ role: 'user', content: user }],
+      }),
+    });
+
+    if (!r.ok) {
+      const txt = await r.text();
+      return res.status(502).json({ error: `Erreur API (${r.status}): ${txt}` });
+    }
+
+    const data = await r.json();
+    const content = data.content || [];
+
+    // Collecter tous les textes et résultats de recherche
+    const texts = content.filter(b => b.type === 'text').map(b => b.text).join('\n');
+    const searchResults = content.filter(b => b.type === 'tool_result').map(b => b.content).join('\n');
+
+    // Chercher JSON dans la réponse
+    const allText = texts + searchResults;
+    const match = allText.replace(/```json|```/g, '').match(/\{[\s\S]*"resultats"[\s\S]*\}/);
+    if (match) {
+      try {
+        return res.status(200).json(JSON.parse(match[0]));
+      } catch {}
+    }
+
+    // Si pas de JSON mais du texte, faire un second appel pour formatter
+    if (texts.length > 30) {
+      const r2 = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -32,67 +66,27 @@ Pas de texte avant, pas de texte après, pas de markdown, pas de backticks. Uniq
         },
         body: JSON.stringify({
           model: 'claude-haiku-4-5',
-          max_tokens: 2000,
-          system: systemPrompt,
-          tools,
-          messages,
+          max_tokens: 800,
+          messages: [{
+            role: 'user',
+            content: `Formate ces informations en JSON strict. Réponds UNIQUEMENT avec le JSON, rien d'autre:\n{"resultats":[{"nom":"...","badge":"Programme ou Actualité ou Recrutement","titre":"...","date":"...","source":"...","resume":"..."}]}\n\nInfos:\n${texts.slice(0, 2000)}`
+          }],
         }),
       });
-
-      if (!r.ok) {
-        const txt = await r.text();
-        return res.status(502).json({ error: `Erreur API (${r.status}): ${txt}` });
-      }
-
-      const data = await r.json();
-      const { stop_reason, content = [] } = data;
-
-      if (stop_reason === 'tool_use') {
-        messages.push({ role: 'assistant', content });
-        const results = content
-          .filter(b => b.type === 'tool_use')
-          .map(b => ({ type: 'tool_result', tool_use_id: b.id, content: 'Search done.' }));
-        messages.push({ role: 'user', content: results });
-        continue;
-      }
-
-      if (stop_reason === 'end_turn') {
-        const textBlock = content.find(b => b.type === 'text');
-        const raw = (textBlock?.text || '').replace(/```json|```/g, '').trim();
-
-        // Tenter parse JSON direct
-        try {
-          const parsed = JSON.parse(raw);
-          if (parsed.resultats) return res.status(200).json(parsed);
-        } catch {}
-
-        // Chercher un objet JSON dans le texte
-        const match = raw.match(/\{[\s\S]*"resultats"[\s\S]*\}/);
-        if (match) {
-          try {
-            const parsed = JSON.parse(match[0]);
-            if (parsed.resultats) return res.status(200).json(parsed);
-          } catch {}
+      if (r2.ok) {
+        const d2 = await r2.json();
+        const t2 = (d2.content?.find(b => b.type === 'text')?.text || '').replace(/```json|```/g, '').trim();
+        const m2 = t2.match(/\{[\s\S]*"resultats"[\s\S]*\}/);
+        if (m2) {
+          try { return res.status(200).json(JSON.parse(m2[0])); } catch {}
         }
-
-        // Si l'agent a du texte mais pas de JSON, lui demander de formater
-        if (raw.length > 50) {
-          messages.push({ role: 'assistant', content });
-          messages.push({
-            role: 'user',
-            content: 'Maintenant formate ces informations en JSON strict: {"resultats":[{"nom":"...","badge":"...","titre":"...","date":"...","source":"...","resume":"..."}]}. Uniquement le JSON, rien d\'autre.'
-          });
-          continue;
-        }
-
-        return res.status(200).json({
-          resultats: [{ nom: '', badge: 'Actualité', titre: 'Résultat de veille', date: '2025', source: '', resume: raw.slice(0, 400) }]
-        });
       }
-
-      return res.status(500).json({ error: `Stop inattendu: ${stop_reason}` });
     }
-    return res.status(500).json({ error: 'Pas de résultat après plusieurs tentatives.' });
+
+    return res.status(200).json({
+      resultats: [{ nom: '', badge: 'Actualité', titre: 'Résultat', date: '2025', source: '', resume: texts.slice(0, 300) || 'Aucun résultat trouvé.' }]
+    });
+
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
