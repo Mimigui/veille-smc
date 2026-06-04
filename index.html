@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Veille SMC — SKEMA</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f3; color: #1a1a1a; min-height: 100vh; }
+    header { background: #fff; border-bottom: 1px solid #e5e5e5; padding: 0 2rem; display: flex; align-items: center; gap: 1rem; height: 56px; }
+    header .logo { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+    header .logo span { color: #0066cc; }
+    header .subtitle { font-size: 13px; color: #888; border-left: 1px solid #e5e5e5; padding-left: 1rem; margin-left: 0.5rem; }
+    main { max-width: 820px; margin: 2rem auto; padding: 0 1.5rem; }
+    .tabs { display: flex; gap: 2px; background: #efefed; border-radius: 10px; padding: 3px; margin-bottom: 1.5rem; width: fit-content; }
+    .tab { font-size: 13px; padding: 6px 16px; border-radius: 8px; border: none; background: none; color: #666; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    .tab.active { background: #fff; color: #1a1a1a; font-weight: 500; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .tab:hover:not(.active) { color: #1a1a1a; }
+    .section { display: none; }
+    .section.active { display: block; }
+    .panel { background: #fff; border-radius: 12px; border: 1px solid #e5e5e5; padding: 1.5rem; margin-bottom: 1rem; }
+    .panel-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #999; font-weight: 600; margin-bottom: 10px; }
+    .chip-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 0.5rem; }
+    .chip { font-size: 12px; padding: 5px 12px; border-radius: 99px; border: 1px solid #e0e0e0; background: #fafafa; color: #555; cursor: pointer; user-select: none; transition: all 0.1s; }
+    .chip.selected { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .chip:hover:not(.selected) { border-color: #999; color: #1a1a1a; }
+    .select-row { display: flex; gap: 8px; margin-bottom: 10px; }
+    .select-row button { font-size: 11px; padding: 3px 10px; border-radius: 99px; border: 1px solid #e0e0e0; background: none; color: #888; cursor: pointer; font-family: inherit; }
+    .select-row button:hover { color: #1a1a1a; border-color: #999; }
+    .input-row { display: flex; gap: 8px; margin-top: 1rem; }
+    .input-row input { flex: 1; font-size: 13px; padding: 9px 14px; border-radius: 8px; border: 1px solid #e0e0e0; background: #fff; color: #1a1a1a; font-family: inherit; outline: none; transition: border-color 0.15s; }
+    .input-row input:focus { border-color: #0066cc; }
+    .input-row input::placeholder { color: #bbb; }
+    .btn-primary { font-size: 13px; padding: 9px 18px; border-radius: 8px; border: none; background: #1a1a1a; color: #fff; cursor: pointer; font-family: inherit; font-weight: 500; white-space: nowrap; transition: background 0.15s; }
+    .btn-primary:hover { background: #333; }
+    .btn-primary:disabled { background: #ccc; cursor: not-allowed; }
+    .results { margin-top: 1.5rem; }
+    .loading { display: flex; align-items: center; gap: 10px; color: #888; font-size: 14px; padding: 1rem 0; }
+    .spinner { width: 16px; height: 16px; border: 2px solid #e0e0e0; border-top-color: #1a1a1a; border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .result-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 10px; }
+    .result-card:hover { border-color: #ccc; }
+    .result-top { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .badge { font-size: 11px; padding: 2px 8px; border-radius: 99px; font-weight: 500; }
+    .badge-prog  { background: #dbeafe; color: #1e40af; }
+    .badge-actu  { background: #ede9fe; color: #5b21b6; }
+    .badge-recru { background: #fef3c7; color: #92400e; }
+    .badge-new   { background: #d1fae5; color: #065f46; }
+    .result-name { font-size: 12px; font-weight: 600; color: #555; }
+    .result-title { font-size: 14px; font-weight: 600; color: #1a1a1a; line-height: 1.4; }
+    .result-meta { font-size: 11px; color: #aaa; margin-top: 3px; }
+    .result-body { font-size: 13px; color: #555; line-height: 1.6; margin-top: 8px; }
+    .error-box { background: #fff5f5; border: 1px solid #fecaca; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #991b1b; }
+    .footer-note { font-size: 11px; color: #bbb; text-align: right; margin-top: 6px; }
+    .divider { border: none; border-top: 1px solid #f0f0f0; margin: 1rem 0; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="logo">Veille <span>SMC</span></div>
+  <div class="subtitle">Agent de veille — Programmes &amp; Cabinets de conseil</div>
+</header>
+<main>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('programmes')">Programmes concurrents</button>
+    <button class="tab" onclick="switchTab('cabinets')">Cabinets de conseil</button>
+    <button class="tab" onclick="switchTab('libre')">Question libre</button>
+  </div>
+
+  <div id="tab-programmes" class="section active">
+    <div class="panel">
+      <div class="panel-label">Programmes à surveiller</div>
+      <div class="select-row">
+        <button onclick="selectAll('chips-programmes')">Tout sélectionner</button>
+        <button onclick="selectNone('chips-programmes')">Tout désélectionner</button>
+      </div>
+      <div class="chip-grid" id="chips-programmes">
+        <span class="chip selected" data-full="MSc Strategy — St. Gallen HSG" onclick="toggleChip(this)">St. Gallen HSG</span>
+        <span class="chip selected" data-full="MSc Strategic Management — HHL Leipzig" onclick="toggleChip(this)">HHL Leipzig</span>
+        <span class="chip selected" data-full="MSc SMIB — ESSEC Business School" onclick="toggleChip(this)">ESSEC SMIB</span>
+        <span class="chip selected" data-full="MSc Strategy — HEC Paris" onclick="toggleChip(this)">HEC Paris</span>
+        <span class="chip selected" data-full="MSc Strategic Management — IE Business School" onclick="toggleChip(this)">IE Business School</span>
+        <span class="chip selected" data-full="MSc Strategy and Consulting — emlyon" onclick="toggleChip(this)">emlyon</span>
+        <span class="chip selected" data-full="MSc Management and Strategy — EDHEC" onclick="toggleChip(this)">EDHEC</span>
+        <span class="chip selected" data-full="MSc Strategy — ESCP Business School" onclick="toggleChip(this)">ESCP</span>
+        <span class="chip selected" data-full="MSc Management — Warwick Business School" onclick="toggleChip(this)">Warwick</span>
+        <span class="chip selected" data-full="MSc Strategic Management — Bocconi University" onclick="toggleChip(this)">Bocconi</span>
+      </div>
+      <div class="divider"></div>
+      <div class="panel-label">Thèmes</div>
+      <div class="chip-grid" id="chips-themes">
+        <span class="chip selected" onclick="toggleChip(this)">Accréditations et classements</span>
+        <span class="chip selected" onclick="toggleChip(this)">Nouveaux partenariats</span>
+        <span class="chip selected" onclick="toggleChip(this)">Évolutions curriculum</span>
+        <span class="chip" onclick="toggleChip(this)">Tracks IA et digital</span>
+        <span class="chip" onclick="toggleChip(this)">Double-diplômes</span>
+        <span class="chip" onclick="toggleChip(this)">Débouchés et employabilité</span>
+      </div>
+      <div class="input-row">
+        <input id="focus-programmes" type="text" placeholder="Précision optionnelle (ex: partenariats cabinets, lancements 2025…)" />
+        <button class="btn-primary" id="btn-programmes" onclick="runVeille('programmes')">Lancer →</button>
+      </div>
+    </div>
+    <div class="results" id="results-programmes"></div>
+  </div>
+
+  <div id="tab-cabinets" class="section">
+    <div class="panel">
+      <div class="panel-label">Cabinets à surveiller</div>
+      <div class="select-row">
+        <button onclick="selectAll('chips-cabinets')">Tout sélectionner</button>
+        <button onclick="selectNone('chips-cabinets')">Tout désélectionner</button>
+      </div>
+      <div class="chip-grid" id="chips-cabinets">
+        <span class="chip selected" onclick="toggleChip(this)">McKinsey</span>
+        <span class="chip selected" onclick="toggleChip(this)">BCG</span>
+        <span class="chip selected" onclick="toggleChip(this)">Bain</span>
+        <span class="chip selected" onclick="toggleChip(this)">Deloitte</span>
+        <span class="chip selected" onclick="toggleChip(this)">Roland Berger</span>
+        <span class="chip" onclick="toggleChip(this)">Oliver Wyman</span>
+        <span class="chip" onclick="toggleChip(this)">Kearney</span>
+        <span class="chip" onclick="toggleChip(this)">EY-Parthenon</span>
+        <span class="chip" onclick="toggleChip(this)">Accenture Strategy</span>
+        <span class="chip" onclick="toggleChip(this)">Sia Partners</span>
+      </div>
+      <div class="divider"></div>
+      <div class="panel-label">Type d'information</div>
+      <div class="chip-grid" id="chips-type">
+        <span class="chip selected" onclick="toggleChip(this)">Actualités générales</span>
+        <span class="chip selected" onclick="toggleChip(this)">Tendances recrutement</span>
+        <span class="chip" onclick="toggleChip(this)">Offres stages juniors</span>
+        <span class="chip" onclick="toggleChip(this)">Nouvelles pratiques RH</span>
+        <span class="chip" onclick="toggleChip(this)">Secteurs en croissance</span>
+      </div>
+      <div class="input-row">
+        <input id="focus-cabinets" type="text" placeholder="Focus optionnel (ex: recrutement IA, France junior…)" />
+        <button class="btn-primary" id="btn-cabinets" onclick="runVeille('cabinets')">Lancer →</button>
+      </div>
+    </div>
+    <div class="results" id="results-cabinets"></div>
+  </div>
+
+  <div id="tab-libre" class="section">
+    <div class="panel">
+      <div class="panel-label">Question libre à l'agent</div>
+      <div class="input-row">
+        <input id="focus-libre" type="text" placeholder="Ex: Quels MSc Strategy ont lancé un track IA en 2024-25 ?" />
+        <button class="btn-primary" id="btn-libre" onclick="runVeille('libre')">Envoyer →</button>
+      </div>
+    </div>
+    <div class="results" id="results-libre"></div>
+  </div>
+</main>
+
+<script>
+function switchTab(name) {
+  const names = ['programmes','cabinets','libre'];
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', names[i] === name));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+}
+function toggleChip(el) { el.classList.toggle('selected'); }
+function selectAll(id)  { document.querySelectorAll('#'+id+' .chip').forEach(c => c.classList.add('selected')); }
+function selectNone(id) { document.querySelectorAll('#'+id+' .chip').forEach(c => c.classList.remove('selected')); }
+function getSelected(id) {
+  return [...document.querySelectorAll('#'+id+' .chip.selected')].map(c => c.dataset.full || c.textContent.trim());
+}
+function badgeClass(label) {
+  if (!label) return 'badge-actu';
+  const l = label.toLowerCase();
+  if (l.includes('programme') || l.includes('accréditation') || l.includes('classement')) return 'badge-prog';
+  if (l.includes('recrutement') || l.includes('rh') || l.includes('stage')) return 'badge-recru';
+  if (l.includes('croissance') || l.includes('tendance')) return 'badge-new';
+  return 'badge-actu';
+}
+function renderCards(resultats, container) {
+  if (!resultats || !resultats.length) {
+    container.innerHTML = '<div class="error-box">Aucun résultat trouvé.</div>';
+    return;
+  }
+  container.innerHTML = resultats.map(r => {
+    const name = r.programme || r.cabinet || '';
+    const label = r.badge || 'Actualité';
+    const meta = [r.date, r.source].filter(Boolean).join(' · ');
+    return '<div class="result-card"><div class="result-top"><span class="badge ' + badgeClass(label) + '">' + label + '</span>' +
+      (name ? '<span class="result-name">' + name + '</span>' : '') + '</div>' +
+      '<div class="result-title">' + (r.titre||'') + '</div>' +
+      (meta ? '<div class="result-meta">' + meta + '</div>' : '') +
+      '<div class="result-body">' + (r.resume||'') + '</div></div>';
+  }).join('') + '<div class="footer-note">Résultats générés avec recherche web en temps réel</div>';
+}
+async function runVeille(mode) {
+  const container = document.getElementById('results-' + mode);
+  const btn = document.getElementById('btn-' + mode);
+  container.innerHTML = '<div class="loading"><div class="spinner"></div>Recherche en cours…</div>';
+  if (btn) btn.disabled = true;
+  let system = '', user = '';
+  if (mode === 'programmes') {
+    const progs = getSelected('chips-programmes');
+    const themes = getSelected('chips-themes');
+    const focus = document.getElementById('focus-programmes').value.trim();
+    if (!progs.length) { container.innerHTML = '<div class="error-box">Sélectionne au moins un programme.</div>'; if(btn) btn.disabled=false; return; }
+    system = "Tu es un agent de veille sur les Masters en stratégie et conseil des grandes écoles européennes pour la directrice du MSc SMC de SKEMA. Recherche des actualités récentes (2024-2025). Réponds UNIQUEMENT avec un objet JSON valide sans markdown ni backticks. Format : {\"resultats\":[{\"programme\":\"nom court\",\"badge\":\"Programme\",\"titre\":\"titre\",\"date\":\"période\",\"source\":\"source\",\"resume\":\"2-3 phrases\"}]}";
+    user = "Veille sur : " + progs.join(' | ') + ". Thèmes : " + themes.join(', ') + "." + (focus ? ' Précision : ' + focus + '.' : '') + " 1 actu par programme si possible.";
+  } else if (mode === 'cabinets') {
+    const cab = getSelected('chips-cabinets');
+    const types = getSelected('chips-type');
+    const focus = document.getElementById('focus-cabinets').value.trim();
+    if (!cab.length) { container.innerHTML = '<div class="error-box">Sélectionne au moins un cabinet.</div>'; if(btn) btn.disabled=false; return; }
+    system = "Tu es un agent de veille sur les cabinets de conseil en management pour la directrice du MSc SMC de SKEMA. Réponds UNIQUEMENT avec un objet JSON valide sans markdown ni backticks. Format : {\"resultats\":[{\"cabinet\":\"nom\",\"badge\":\"Actualité ou Recrutement ou Tendance RH ou Croissance\",\"titre\":\"...\",\"date\":\"...\",\"source\":\"...\",\"resume\":\"...\"}]}";
+    user = "Veille sur : " + cab.join(', ') + ". Types : " + types.join(', ') + "." + (focus ? ' Focus : ' + focus + '.' : '');
+  } else {
+    const q = document.getElementById('focus-libre').value.trim();
+    if (!q) { container.innerHTML = '<div class="error-box">Entre une question.</div>'; if(btn) btn.disabled=false; return; }
+    system = "Tu es un agent de veille expert pour la directrice du MSc SMC de SKEMA. Réponds UNIQUEMENT en JSON valide sans markdown. Format : {\"resultats\":[{\"titre\":\"...\",\"badge\":\"...\",\"date\":\"...\",\"source\":\"...\",\"resume\":\"...\"}]}";
+    user = q;
+  }
+  try {
+    const res = await fetch('/api/veille', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ system, user }) });
+    if (!res.ok) { const err = await res.text(); container.innerHTML = '<div class="error-box">Erreur serveur (' + res.status + ') : ' + err + '</div>'; return; }
+    const data = await res.json();
+    if (data.error) { container.innerHTML = '<div class="error-box">' + data.error + '</div>'; return; }
+    renderCards(data.resultats, container);
+  } catch(err) {
+    container.innerHTML = '<div class="error-box">Erreur : ' + err.message + '</div>';
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+</script>
+</body>
+</html>
