@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,93 +6,130 @@
   <title>Veille SMC — SKEMA</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f3; color: #1a1a1a; min-height: 100vh; }
-    header { background: #fff; border-bottom: 1px solid #e5e5e5; padding: 0 2rem; display: flex; align-items: center; gap: 1rem; height: 56px; }
-    header .logo { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
-    header .logo span { color: #0066cc; }
-    header .subtitle { font-size: 13px; color: #888; border-left: 1px solid #e5e5e5; padding-left: 1rem; margin-left: 0.5rem; }
-    main { max-width: 820px; margin: 2rem auto; padding: 0 1.5rem; }
-    .tabs { display: flex; gap: 2px; background: #efefed; border-radius: 10px; padding: 3px; margin-bottom: 1.5rem; width: fit-content; }
-    .tab { font-size: 13px; padding: 6px 16px; border-radius: 8px; border: none; background: none; color: #666; cursor: pointer; font-family: inherit; transition: all 0.15s; }
-    .tab.active { background: #fff; color: #1a1a1a; font-weight: 500; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
-    .tab:hover:not(.active) { color: #1a1a1a; }
+    body { font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif; background: #faf9f7; color: #1a1a1a; min-height: 100vh; }
+
+    /* HEADER */
+    header { background: linear-gradient(135deg, #4B2680 0%, #C8102E 100%); border-bottom: none; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 80px; }
+    .skema-logo { height: 38px; width: auto; filter: brightness(0) invert(1); }
+    .header-right { text-align: right; }
+    .header-title { font-size: 14px; font-weight: 700; color: #fff; letter-spacing: 0.04em; text-transform: uppercase; }
+    .header-byline { font-size: 11px; color: rgba(255,255,255,0.75); margin-top: 2px; }
+
+    /* MAIN */
+    main { max-width: 920px; margin: 2rem auto; padding: 0 1.5rem; }
+
+    /* TABS */
+    .tabs { display: flex; gap: 3px; margin-bottom: 1.5rem; }
+    .tab { font-size: 13px; padding: 9px 20px; border: 2px solid #ddd; border-radius: 3px; background: #fff; color: #555; cursor: pointer; font-family: inherit; font-weight: 600; letter-spacing: 0.03em; transition: all 0.15s; }
+    .tab.active { background: #C8102E; color: #fff; border-color: #C8102E; }
+    .tab:hover:not(.active) { border-color: #C8102E; color: #C8102E; }
     .section { display: none; }
     .section.active { display: block; }
-    .panel { background: #fff; border-radius: 12px; border: 1px solid #e5e5e5; padding: 1.5rem; margin-bottom: 1rem; }
-    .panel-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #999; font-weight: 600; margin-bottom: 10px; }
+
+    /* PANELS */
+    .panel { background: #fff; border-radius: 4px; border: 1px solid #e8e8e8; border-left: 4px solid #C8102E; padding: 1.5rem; margin-bottom: 1rem; }
+    .panel-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #C8102E; font-weight: 700; margin-bottom: 10px; }
+
+    /* CHIPS */
     .chip-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 0.5rem; }
-    .chip { font-size: 12px; padding: 5px 12px; border-radius: 99px; border: 1px solid #e0e0e0; background: #fafafa; color: #555; cursor: pointer; user-select: none; transition: all 0.1s; }
-    .chip.selected { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
-    .chip:hover:not(.selected) { border-color: #999; color: #1a1a1a; }
+    .chip { font-size: 12px; padding: 5px 12px; border-radius: 99px; border: 1.5px solid #ddd; background: #fff; color: #555; cursor: pointer; user-select: none; transition: all 0.12s; }
+    .chip.selected { background: #C8102E; color: #fff; border-color: #C8102E; }
+    .chip:hover:not(.selected) { border-color: #C8102E; color: #C8102E; }
     .select-row { display: flex; gap: 8px; margin-bottom: 10px; }
-    .select-row button { font-size: 11px; padding: 3px 10px; border-radius: 99px; border: 1px solid #e0e0e0; background: none; color: #888; cursor: pointer; font-family: inherit; }
-    .select-row button:hover { color: #1a1a1a; border-color: #999; }
-    .input-row { display: flex; gap: 8px; margin-top: 1rem; }
-    .input-row input { flex: 1; font-size: 13px; padding: 9px 14px; border-radius: 8px; border: 1px solid #e0e0e0; background: #fff; color: #1a1a1a; font-family: inherit; outline: none; transition: border-color 0.15s; }
-    .input-row input:focus { border-color: #0066cc; }
-    .input-row input::placeholder { color: #bbb; }
-    .btn-primary { font-size: 13px; padding: 9px 18px; border-radius: 8px; border: none; background: #1a1a1a; color: #fff; cursor: pointer; font-family: inherit; font-weight: 500; white-space: nowrap; transition: background 0.15s; }
-    .btn-primary:hover { background: #333; }
+    .select-row button { font-size: 11px; padding: 3px 10px; border-radius: 99px; border: 1px solid #ddd; background: none; color: #888; cursor: pointer; font-family: inherit; }
+    .select-row button:hover { border-color: #C8102E; color: #C8102E; }
+
+    /* BOUTONS */
+    .input-row { display: flex; gap: 8px; margin-top: 1rem; flex-wrap: wrap; }
+    .input-row input { flex: 1; min-width: 200px; font-size: 13px; padding: 9px 14px; border-radius: 4px; border: 1.5px solid #ddd; background: #fff; color: #1a1a1a; font-family: inherit; outline: none; }
+    .input-row input:focus { border-color: #C8102E; }
+    .btn-primary { font-size: 12px; padding: 9px 20px; border-radius: 4px; border: none; background: #C8102E; color: #fff; cursor: pointer; font-family: inherit; font-weight: 700; white-space: nowrap; letter-spacing: 0.04em; text-transform: uppercase; }
+    .btn-primary:hover { background: #a00d24; }
     .btn-primary:disabled { background: #ccc; cursor: not-allowed; }
-    .btn-secondary { font-size: 13px; padding: 9px 18px; border-radius: 8px; border: 1px solid #1a1a1a; background: #fff; color: #1a1a1a; cursor: pointer; font-family: inherit; font-weight: 500; white-space: nowrap; transition: all 0.15s; }
-    .btn-secondary:hover { background: #f5f5f3; }
+    .btn-secondary { font-size: 12px; padding: 9px 20px; border-radius: 4px; border: 2px solid #C8102E; background: #fff; color: #C8102E; cursor: pointer; font-family: inherit; font-weight: 700; white-space: nowrap; letter-spacing: 0.04em; text-transform: uppercase; }
+    .btn-secondary:hover { background: #C8102E; color: #fff; }
     .btn-secondary:disabled { border-color: #ccc; color: #ccc; cursor: not-allowed; }
-    .result-link { display: inline-block; margin-top: 8px; font-size: 12px; color: #0066cc; text-decoration: none; }
-    .result-link:hover { text-decoration: underline; }
-    .prog-header { background: #f9f9f7; border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; }
-    .prog-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
-    .prog-meta-item { font-size: 12px; padding: 3px 10px; background: #fff; border: 1px solid #e5e5e5; border-radius: 99px; color: #555; }
-    .timeline { margin-top: 4px; display: flex; flex-direction: column; position: relative; }
-    .timeline::before { content: ""; position: absolute; left: 14px; top: 10px; bottom: 10px; width: 2px; background: #e5e5e5; }
-    .timeline-item { display: flex; gap: 14px; align-items: flex-start; padding: 10px 0; position: relative; }
-    .timeline-dot { width: 12px; height: 12px; border-radius: 50%; background: #1a1a1a; flex-shrink: 0; margin-top: 4px; z-index: 1; border: 2px solid #fff; box-shadow: 0 0 0 2px #1a1a1a; }
-    .timeline-body { flex: 1; }
-    .timeline-period { font-size: 11px; font-weight: 700; color: #1a1a1a; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
-    .timeline-content { font-size: 13px; color: #555; line-height: 1.6; background: #f9f9f7; padding: 10px 12px; border-radius: 8px; border-left: 3px solid #1a1a1a; }
-    .cours-section { margin-top: 4px; }
-    .cours-categorie { font-size: 11px; font-weight: 700; color: #0066cc; text-transform: uppercase; letter-spacing: 0.06em; margin: 12px 0 6px; padding-bottom: 4px; border-bottom: 1px solid #e5e5e5; }
-    .cours-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; }
-    .cours-item { font-size: 12px; padding: 4px 10px; background: #f0f5ff; border: 1px solid #c7d8f8; border-radius: 6px; color: #1a4b8c; }
-    .processus-box { margin-top: 10px; padding: 10px 14px; background: #f9f9f7; border-radius: 8px; border: 1px solid #efefed; }
-    .processus-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #999; font-weight: 600; margin-bottom: 6px; }
-    .processus-etapes { font-size: 13px; color: #333; line-height: 1.8; }
-    .processus-meta { font-size: 12px; color: #888; margin-top: 6px; }
-    .pays-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
-    .pays-card { background: #f9f9f7; border-radius: 10px; padding: 14px; border: 1px solid #e5e5e5; }
-    .pays-name { font-size: 16px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
-    .pays-marche { font-size: 13px; color: #555; line-height: 1.5; margin-bottom: 10px; }
-    .pays-section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #999; margin: 8px 0 4px; }
-    .pays-spec { font-size: 12px; color: #444; padding: 3px 0; border-bottom: 1px solid #f0f0f0; line-height: 1.5; }
-    .pays-spec:last-child { border-bottom: none; }
-    .pays-salaire { display: inline-block; font-size: 12px; background: #e6f4ea; color: #1a5c2a; padding: 3px 10px; border-radius: 99px; margin-top: 6px; }
-    .pays-tendance { font-size: 12px; color: #0066cc; background: #e6f1fb; padding: 8px 10px; border-radius: 8px; margin-top: 8px; line-height: 1.5; }
-    .pays-ecoles { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
-    .pays-ecole { font-size: 11px; background: #fff; border: 1px solid #e0e0e0; padding: 2px 8px; border-radius: 99px; color: #555; }
+
+    /* RESULTS */
     .results { margin-top: 1.5rem; }
     .loading { display: flex; align-items: center; gap: 10px; color: #888; font-size: 14px; padding: 1rem 0; }
-    .spinner { width: 16px; height: 16px; border: 2px solid #e0e0e0; border-top-color: #1a1a1a; border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+    .spinner { width: 16px; height: 16px; border: 2px solid #eee; border-top-color: #C8102E; border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .result-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 10px; }
-    .result-card:hover { border-color: #ccc; }
+    .result-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 6px; padding: 1rem 1.25rem; margin-bottom: 10px; }
     .result-top { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-    .badge { font-size: 11px; padding: 2px 8px; border-radius: 99px; font-weight: 500; }
-    .badge-prog  { background: #dbeafe; color: #1e40af; }
-    .badge-actu  { background: #ede9fe; color: #5b21b6; }
-    .badge-recru { background: #fef3c7; color: #92400e; }
-    .badge-new   { background: #d1fae5; color: #065f46; }
-    .result-name { font-size: 12px; font-weight: 600; color: #555; }
-    .result-title { font-size: 14px; font-weight: 600; color: #1a1a1a; line-height: 1.4; }
+    .badge { font-size: 11px; padding: 2px 8px; border-radius: 99px; font-weight: 600; }
+    .badge-prog { background: #fde8ec; color: #C8102E; }
+    .badge-actu { background: #f0f0f0; color: #555; }
+    .badge-recru { background: #fff3e0; color: #e65c00; }
+    .badge-new { background: #e8f5e9; color: #2e7d32; }
+    .result-name { font-size: 12px; font-weight: 700; color: #C8102E; }
+    .result-title { font-size: 14px; font-weight: 700; color: #1a1a1a; line-height: 1.4; }
     .result-meta { font-size: 11px; color: #aaa; margin-top: 3px; }
     .result-body { font-size: 13px; color: #555; line-height: 1.6; margin-top: 8px; }
-    .error-box { background: #fff5f5; border: 1px solid #fecaca; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #991b1b; }
+    .result-link { display: inline-block; margin-top: 8px; font-size: 12px; color: #C8102E; text-decoration: none; font-weight: 600; }
+    .result-link:hover { text-decoration: underline; }
+    .error-box { background: #fde8ec; border: 1px solid #f5b8bb; border-radius: 4px; padding: 12px 16px; font-size: 13px; color: #C8102E; }
     .footer-note { font-size: 11px; color: #bbb; text-align: right; margin-top: 6px; }
     .divider { border: none; border-top: 1px solid #f0f0f0; margin: 1rem 0; }
+
+    /* FICHE PROGRAMME */
+    .prog-fiche { margin-bottom: 2rem; border-radius: 6px; overflow: hidden; border: 1px solid #e8e8e8; }
+    .prog-fiche-header { background: #C8102E; color: #fff; padding: 1.5rem; }
+    .prog-fiche-title { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+    .prog-fiche-sub { font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 12px; }
+    .prog-fiche-meta { display: flex; flex-wrap: wrap; gap: 8px; }
+    .prog-fiche-tag { font-size: 11px; background: rgba(255,255,255,0.2); padding: 3px 10px; border-radius: 99px; color: #fff; }
+    .prog-section { border-top: 1px solid #f0f0f0; padding: 1.25rem 1.5rem; background: #fff; }
+    .prog-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: #C8102E; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #fde8ec; }
+    .timeline { display: flex; flex-direction: column; position: relative; }
+    .timeline::before { content: ""; position: absolute; left: 5px; top: 8px; bottom: 8px; width: 2px; background: #fde8ec; }
+    .timeline-item { display: flex; gap: 16px; padding: 8px 0; }
+    .timeline-dot { width: 12px; height: 12px; border-radius: 50%; background: #C8102E; flex-shrink: 0; margin-top: 4px; z-index: 1; border: 2px solid #fff; box-shadow: 0 0 0 2px #C8102E; }
+    .timeline-body { flex: 1; }
+    .timeline-period { font-size: 10px; font-weight: 700; color: #C8102E; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px; }
+    .timeline-content { font-size: 13px; color: #555; line-height: 1.6; background: #fdf5f6; padding: 10px 12px; border-radius: 4px; border-left: 3px solid #C8102E; }
+    .cours-section { margin-top: 4px; }
+    .cours-categorie { font-size: 11px; font-weight: 700; color: #C8102E; text-transform: uppercase; letter-spacing: .06em; margin: 12px 0 6px; padding-bottom: 4px; border-bottom: 2px solid #fde8ec; }
+    .cours-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; }
+    .cours-item { font-size: 12px; padding: 4px 10px; background: #fdf5f6; border: 1px solid #f5c0c7; border-radius: 4px; color: #a00d24; }
+    .actu-item { padding: 10px 0; border-bottom: 1px solid #f5f5f5; }
+    .actu-item:last-child { border-bottom: none; }
+    .actu-badge { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 99px; font-weight: 600; background: #fde8ec; color: #C8102E; border: 1px solid #f5c0c7; margin-right: 6px; }
+    .actu-title { font-size: 14px; font-weight: 700; color: #1a1a1a; margin: 4px 0 3px; }
+    .actu-meta { font-size: 11px; color: #aaa; margin-bottom: 4px; }
+    .actu-body { font-size: 13px; color: #555; line-height: 1.5; }
+    .processus-box { margin-top: 12px; padding: 12px 16px; background: #fdf5f6; border-radius: 4px; border-left: 4px solid #C8102E; }
+    .processus-label { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: #C8102E; font-weight: 700; margin-bottom: 8px; }
+    .processus-etapes { font-size: 13px; color: #333; line-height: 2; }
+    .processus-meta { font-size: 12px; color: #888; margin-top: 8px; line-height: 1.8; }
+
+    /* PAYS */
+    .pays-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+    .pays-card { background: #fff; border-radius: 6px; padding: 14px; border: 1px solid #e8e8e8; border-top: 3px solid #C8102E; }
+    .pays-name { font-size: 16px; font-weight: 700; color: #C8102E; margin-bottom: 6px; }
+    .pays-marche { font-size: 13px; color: #555; line-height: 1.5; margin-bottom: 10px; }
+    .pays-section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #999; margin: 8px 0 4px; }
+    .pays-spec { font-size: 12px; color: #444; padding: 3px 0; border-bottom: 1px solid #f5f5f5; line-height: 1.5; }
+    .pays-spec:last-child { border-bottom: none; }
+    .pays-salaire { display: inline-block; font-size: 12px; background: #fde8ec; color: #C8102E; padding: 3px 10px; border-radius: 99px; margin-top: 6px; font-weight: 600; }
+    .pays-tendance { font-size: 12px; color: #333; background: #faf9f7; padding: 8px 10px; border-radius: 4px; margin-top: 8px; line-height: 1.5; border-left: 3px solid #C8102E; }
+    .pays-ecoles { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+    .pays-ecole { font-size: 11px; background: #fff; border: 1px solid #ddd; padding: 2px 8px; border-radius: 99px; color: #555; }
+
+    /* TENDANCES */
+    .tendance-card { background: #fff; border-radius: 6px; border: 1px solid #e8e8e8; padding: 1.25rem; margin-bottom: 10px; border-left: 4px solid #C8102E; }
+    .tendance-title { font-size: 15px; font-weight: 700; color: #1a1a1a; margin-bottom: 6px; }
+    .tendance-body { font-size: 13px; color: #555; line-height: 1.6; }
+    .tendance-source { font-size: 11px; color: #aaa; margin-top: 6px; }
   </style>
 </head>
 <body>
 <header>
-  <div class="logo">Veille <span>SMC</span></div>
-  <div class="subtitle">Agent de veille — Programmes &amp; Cabinets de conseil</div>
+  <img src="/skema-logo.png" alt="SKEMA Business School" style="height:48px;width:auto;" />
+  <div class="header-right">
+    <div class="header-title">Veille SMC — Programmes &amp; Cabinets de conseil</div>
+    <div class="header-byline">by Matilde Guilhon · Directrice MSc Strategic Management &amp; Consulting</div>
+  </div>
 </header>
 <main>
   <div class="tabs">
@@ -102,45 +138,31 @@
     <button class="tab" onclick="switchTab('libre')">Question libre</button>
   </div>
 
+  <!-- PROGRAMMES -->
   <div id="tab-programmes" class="section active">
     <div class="panel">
-      <div class="panel-label">Programmes à surveiller</div>
+      <div class="panel-label">Sélectionne un ou plusieurs programmes pour voir la fiche complète</div>
       <div class="select-row">
         <button onclick="selectAll('chips-programmes')">Tout sélectionner</button>
         <button onclick="selectNone('chips-programmes')">Tout désélectionner</button>
       </div>
       <div class="chip-grid" id="chips-programmes">
-        <span class="chip selected" data-full="Bocconi MSc International Management — Concentration in Consulting" data-url="https://www.unibocconi.it/en/programs/master-science/international-management/concentration-consulting" onclick="toggleChip(this)">Bocconi</span>
-        <span class="chip selected" data-full="EDHEC MSc in Strategy, Organisation and Consulting" data-url="https://www.edhec.edu/en/programmes/masters-degree/business-degrees/msc-in-strategy-organisation-and-consulting" onclick="toggleChip(this)">EDHEC</span>
-        <span class="chip selected" data-full="emlyon Master in Strategy and Consulting" data-url="https://en.em-lyon.com.cn/program/msc-in-strategy-consulting/curriculum" onclick="toggleChip(this)">emlyon</span>
-        <span class="chip selected" data-full="ESCP MSc Stratégie Conseil et Organisation" data-url="https://escp.eu/programmes/specialised-masters-MSc/MSc-strategie-conseil-organisation" onclick="toggleChip(this)">ESCP</span>
-        <span class="chip selected" data-full="ESSEC MSc in Strategy, Management and International Business (SMIB)" data-url="https://www.essec.edu/en/program/master-strategy-management-international-business/?tab=program" onclick="toggleChip(this)">ESSEC SMIB</span>
-        <span class="chip selected" data-full="HEC Paris Master in Strategic Management" data-url="https://www.hec.edu/en/master-s-programs/master-strategic-management" onclick="toggleChip(this)">HEC Paris</span>
-        <span class="chip selected" data-full="HHL Leipzig MSc in Management and Business Consulting" data-url="https://www.hhl.de/programs/full-time-master-in-management-consulting/" onclick="toggleChip(this)">HHL Leipzig</span>
-        <span class="chip selected" data-full="IE Master in Management and Strategy" data-url="https://www.ie.edu/business-school/programs/masters/master-in-management-and-strategy/" onclick="toggleChip(this)">IE Business School</span>
-        <span class="chip selected" data-full="St. Gallen Master in Strategy and International Management (SIM)" data-url="https://www.unisg.ch/en/studying/programmes/master/strategy-and-international-management-sim/" onclick="toggleChip(this)">St. Gallen HSG</span>
-        <span class="chip selected" data-full="Warwick MSc Business with Consulting" data-url="https://www.wbs.ac.uk/courses/masters/business-consulting/" onclick="toggleChip(this)">Warwick</span>
-      </div>
-      <div class="divider"></div>
-      <div class="panel-label">Thèmes</div>
-      <div class="chip-grid" id="chips-themes">
-        <span class="chip selected" onclick="toggleChip(this)">Accréditations et classements</span>
-        <span class="chip selected" onclick="toggleChip(this)">Nouveaux partenariats</span>
-        <span class="chip selected" onclick="toggleChip(this)">Évolutions curriculum</span>
-        <span class="chip" onclick="toggleChip(this)">Tracks IA et digital</span>
-        <span class="chip" onclick="toggleChip(this)">Double-diplômes</span>
-        <span class="chip" onclick="toggleChip(this)">Débouchés et employabilité</span>
-      </div>
-      <div class="input-row">
-        <input id="focus-programmes" type="text" placeholder="Précision optionnelle (ex: partenariats, lancements 2025…)" />
-        <button class="btn-primary" id="btn-programmes" onclick="runVeille('programmes')">Lancer →</button>
-        <button class="btn-secondary" id="btn-structure" onclick="runProgramme('structure')">Structure →</button>
-        <button class="btn-secondary" id="btn-cours" onclick="runProgramme('cours')">Cours →</button>
+        <span class="chip" data-key="Bocconi" data-full="Bocconi MSc International Management — Concentration in Consulting" data-url="https://www.unibocconi.it/en/programs/master-science/international-management/concentration-consulting" onclick="selectProg(this)">Bocconi</span>
+        <span class="chip" data-key="EDHEC" data-full="EDHEC MSc in Strategy, Organisation and Consulting" data-url="https://www.edhec.edu/en/programmes/masters-degree/business-degrees/msc-in-strategy-organisation-and-consulting" onclick="selectProg(this)">EDHEC</span>
+        <span class="chip" data-key="emlyon" data-full="emlyon Master in Strategy and Consulting" data-url="https://en.em-lyon.com.cn/program/msc-in-strategy-consulting/curriculum" onclick="selectProg(this)">emlyon</span>
+        <span class="chip" data-key="ESCP" data-full="ESCP MSc Stratégie Conseil et Organisation" data-url="https://escp.eu/programmes/specialised-masters-MSc/MSc-strategie-conseil-organisation" onclick="selectProg(this)">ESCP</span>
+        <span class="chip" data-key="ESSEC SMIB" data-full="ESSEC MSc in Strategy, Management and International Business (SMIB)" data-url="https://www.essec.edu/en/program/master-strategy-management-international-business/?tab=program" onclick="selectProg(this)">ESSEC SMIB</span>
+        <span class="chip" data-key="HEC Paris" data-full="HEC Paris Master in Strategic Management" data-url="https://www.hec.edu/en/master-s-programs/master-strategic-management" onclick="selectProg(this)">HEC Paris</span>
+        <span class="chip" data-key="HHL Leipzig" data-full="HHL Leipzig MSc in Management and Business Consulting" data-url="https://www.hhl.de/programs/full-time-master-in-management-consulting/" onclick="selectProg(this)">HHL Leipzig</span>
+        <span class="chip" data-key="IE Business School" data-full="IE Master in Management and Strategy" data-url="https://www.ie.edu/business-school/programs/masters/master-in-management-and-strategy/" onclick="selectProg(this)">IE Business School</span>
+        <span class="chip" data-key="St. Gallen HSG" data-full="St. Gallen Master in Strategy and International Management (SIM)" data-url="https://www.unisg.ch/en/studying/programmes/master/strategy-and-international-management-sim/" onclick="selectProg(this)">St. Gallen HSG</span>
+        <span class="chip" data-key="Warwick" data-full="Warwick MSc Business with Consulting" data-url="https://www.wbs.ac.uk/courses/masters/business-consulting/" onclick="selectProg(this)">Warwick</span>
       </div>
     </div>
     <div class="results" id="results-programmes"></div>
   </div>
 
+  <!-- CABINETS -->
   <div id="tab-cabinets" class="section">
     <div class="panel">
       <div class="panel-label">Cabinets à surveiller</div>
@@ -159,7 +181,7 @@
         <span class="chip" onclick="toggleChip(this)">EY-Parthenon</span>
         <span class="chip" onclick="toggleChip(this)">Accenture Strategy</span>
         <span class="chip" onclick="toggleChip(this)">Sia Partners</span>
-        <span class="chip" onclick="toggleChip(this)">Strategy&</span>
+        <span class="chip" onclick="toggleChip(this)">Strategy&amp;</span>
         <span class="chip" onclick="toggleChip(this)">Monitor Deloitte</span>
         <span class="chip" onclick="toggleChip(this)">IBM Consulting</span>
         <span class="chip" onclick="toggleChip(this)">TNP Consultants</span>
@@ -179,11 +201,13 @@
         <button class="btn-primary" id="btn-cabinets" onclick="runVeille('cabinets')">Lancer →</button>
         <button class="btn-secondary" id="btn-processus" onclick="runProcessus()">Processus →</button>
         <button class="btn-secondary" id="btn-pays" onclick="runPays()">Pays →</button>
+        <button class="btn-secondary" id="btn-tendances" onclick="runTendances()">Tendances →</button>
       </div>
     </div>
     <div class="results" id="results-cabinets"></div>
   </div>
 
+  <!-- LIBRE -->
   <div id="tab-libre" class="section">
     <div class="panel">
       <div class="panel-label">Question libre à l'agent</div>
@@ -204,11 +228,10 @@ function switchTab(name) {
   document.getElementById('tab-' + name).classList.add('active');
 }
 function toggleChip(el) { el.classList.toggle('selected'); }
-function selectAll(id)  { document.querySelectorAll('#'+id+' .chip').forEach(c => c.classList.add('selected')); }
-function selectNone(id) { document.querySelectorAll('#'+id+' .chip').forEach(c => c.classList.remove('selected')); }
-function getSelected(id) {
-  return [...document.querySelectorAll('#'+id+' .chip.selected')].map(c => c.dataset.full || c.textContent.trim());
-}
+function selectAll(id) { document.querySelectorAll('#'+id+' .chip').forEach(c => c.classList.add('selected')); if(id==='chips-programmes') loadProgs(); }
+function selectNone(id) { document.querySelectorAll('#'+id+' .chip').forEach(c => c.classList.remove('selected')); if(id==='chips-programmes') loadProgs(); }
+function getSelected(id) { return [...document.querySelectorAll('#'+id+' .chip.selected')].map(c => c.dataset.full || c.textContent.trim()); }
+
 function badgeClass(label) {
   if (!label) return 'badge-actu';
   const l = label.toLowerCase();
@@ -217,11 +240,9 @@ function badgeClass(label) {
   if (l.includes('croissance') || l.includes('tendance')) return 'badge-new';
   return 'badge-actu';
 }
+
 function renderCards(resultats, container) {
-  if (!resultats || !resultats.length) {
-    container.innerHTML = '<div class="error-box">Aucun résultat trouvé.</div>';
-    return;
-  }
+  if (!resultats || !resultats.length) { container.innerHTML = '<div class="error-box">Aucun résultat trouvé.</div>'; return; }
   container.innerHTML = resultats.map(r => {
     const name = r.programme || r.cabinet || r.nom || '';
     const label = r.badge || 'Actualité';
@@ -231,172 +252,179 @@ function renderCards(resultats, container) {
     if (r.processus) {
       const p = r.processus;
       const etapes = (p.etapes || []).map(e => '<div>' + e + '</div>').join('');
-      processusHtml = '<div class="processus-box">' +
-        '<div class="processus-label">Processus de recrutement</div>' +
+      processusHtml = '<div class="processus-box"><div class="processus-label">Processus de recrutement</div>' +
         '<div class="processus-etapes">' + etapes + '</div>' +
         '<div class="processus-meta">' +
         (p.timing ? '⏱ ' + p.timing + '&nbsp;&nbsp;' : '') +
         (p.tests ? '📋 ' + p.tests + '&nbsp;&nbsp;' : '') +
         (p.conseils ? '💡 ' + p.conseils : '') +
-        '</div>' +
-        (p.lien ? '<a href="' + p.lien + '" target="_blank" class="result-link">→ Page carrières</a>' : '') +
-        '</div>';
+        (p.salaire_junior ? '<br>💰 ' + p.salaire_junior : '') + '</div>' +
+        (p.lien ? '<a href="' + p.lien + '" target="_blank" class="result-link">→ Page carrières</a>' : '') + '</div>';
     }
     const titleHtml = r.lien
-      ? '<a href="' + r.lien + '" target="_blank" style="color:inherit;text-decoration:none;"><div class="result-title">' + (r.titre||'') + '</div></a>'
+      ? '<a href="' + r.lien + '" target="_blank" style="color:inherit;text-decoration:none"><div class="result-title">' + (r.titre||'') + '</div></a>'
       : '<div class="result-title">' + (r.titre||'') + '</div>';
     return '<div class="result-card"><div class="result-top"><span class="badge ' + badgeClass(label) + '">' + label + '</span>' +
       (name ? '<span class="result-name">' + name + '</span>' : '') + '</div>' +
-      titleHtml +
-      (meta ? '<div class="result-meta">' + meta + '</div>' : '') +
-      '<div class="result-body">' + (r.resume||'') + '</div>' +
-      lien + processusHtml + '</div>';
-  }).join('') + '<div class="footer-note">Résultats générés avec recherche web en temps réel</div>';
+      titleHtml + (meta ? '<div class="result-meta">' + meta + '</div>' : '') +
+      '<div class="result-body">' + (r.resume||'') + '</div>' + lien + processusHtml + '</div>';
+  }).join('') + '<div class="footer-note">Données avec recherche web en temps réel</div>';
 }
-async function runProgramme(submode) {
-  const progs = getSelected('chips-programmes');
-  if (!progs.length) { alert('Sélectionne au moins un programme.'); return; }
+
+/* ---- PROGRAMMES ---- */
+async function selectProg(el) { el.classList.toggle('selected'); await loadProgs(); }
+
+async function loadProgs() {
+  const chips = [...document.querySelectorAll('#chips-programmes .chip.selected')];
   const container = document.getElementById('results-programmes');
-  const btnId = submode === 'structure' ? 'btn-structure' : 'btn-cours';
-  const btn = document.getElementById(btnId);
-  const label = submode === 'structure' ? 'structure du programme (timeline)' : 'contenu des cours';
-  container.innerHTML = '<div class="loading"><div class="spinner"></div>Recherche de la ' + label + '…</div>';
-  if (btn) btn.disabled = true;
-  const urls = progs.map(p => {
-    const chip = [...document.querySelectorAll('#chips-programmes .chip.selected')].find(c => c.dataset.full === p);
-    return chip?.dataset?.url ? p + ' (' + chip.dataset.url + ')' : p;
-  }).join(' | ');
+  if (!chips.length) { container.innerHTML = ''; return; }
+  container.innerHTML = '<div class="loading"><div class="spinner"></div>Chargement des fiches…</div>';
+  const keys = chips.map(c => c.dataset.key);
+  const urls = chips.map(c => c.dataset.key + ' (' + c.dataset.url + ')').join(' | ');
   try {
-    const r = await fetch('/api/veille', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ mode: 'programmes', submode, user: urls })
-    });
-    if (!r.ok) { container.innerHTML = '<div class="error-box">Erreur serveur</div>'; return; }
-    const data = await r.json();
-    if (data.error) { container.innerHTML = '<div class="error-box">' + data.error + '</div>'; return; }
-    renderProgrammeCards(data.resultats, container, submode);
-  } catch(err) {
-    container.innerHTML = '<div class="error-box">Erreur: ' + err.message + '</div>';
-  } finally {
-    if (btn) btn.disabled = false;
-  }
+    const [rS, rC, rA] = await Promise.all([
+      fetch('/api/veille', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({mode:'programmes', submode:'structure', user: urls}) }),
+      fetch('/api/veille', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({mode:'programmes', submode:'cours', user: urls}) }),
+      fetch('/api/veille', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({mode:'programmes', submode:'actu', user: 'Veille 2024-2025: ' + keys.join(', ')}) })
+    ]);
+    const [dS, dC, dA] = await Promise.all([rS.json(), rC.json(), rA.json()]);
+    renderFiches(keys, dS.resultats||[], dC.resultats||[], dA.resultats||[], container);
+  } catch(err) { container.innerHTML = '<div class="error-box">Erreur: ' + err.message + '</div>'; }
 }
 
-function renderProgrammeCards(resultats, container, submode) {
-  if (!resultats?.length) { container.innerHTML = '<div class="error-box">Aucun résultat.</div>'; return; }
-  container.innerHTML = resultats.map(r => {
-    const name = r.nom || '';
-    const label = r.badge || 'Programme';
-    const bc = badgeClass(label);
-    const lien = r.lien ? '<a href="' + r.lien + '" target="_blank" class="result-link">→ Voir le programme officiel</a>' : '';
-
-    // Header avec métadonnées
-    const resumeParts = (r.resume || '').split(' — ');
+function renderFiches(keys, structs, cours, actus, container) {
+  container.innerHTML = keys.map(key => {
+    const k = key.toLowerCase().split(' ')[0];
+    const s = structs.find(r => (r.nom||'').toLowerCase().includes(k)) || {};
+    const c = cours.find(r => (r.nom||'').toLowerCase().includes(k)) || {};
+    const a = actus.filter(r => (r.nom||r.programme||'').toLowerCase().includes(k));
+    const resumeParts = (s.resume || c.resume || '').split(' — ');
     const metaStr = resumeParts[0] || '';
-    const descStr = resumeParts[1] || r.resume || '';
-    const metaItems = metaStr.split(' | ').filter(Boolean).map(m => '<span class="prog-meta-item">' + m + '</span>').join('');
-    const header = '<div class="prog-header">' +
-      '<div class="result-title" style="font-size:16px;font-weight:600">' + (r.titre||'') + '</div>' +
-      (metaItems ? '<div class="prog-meta">' + metaItems + '</div>' : '') +
-      (descStr ? '<div style="font-size:13px;color:#555;margin-top:8px;line-height:1.6">' + descStr + '</div>' : '') +
-      '</div>';
-
-    let extra = '';
-    if (submode === 'structure' && r.structure && r.structure.length) {
-      const items = r.structure.map(s =>
-        '<div class="timeline-item">' +
-        '<div class="timeline-dot"></div>' +
-        '<div class="timeline-body">' +
-        '<div class="timeline-period">' + (s.periode||'') + '</div>' +
-        '<div class="timeline-content">' + (s.contenu||'') + '</div>' +
-        '</div></div>'
-      ).join('');
-      extra = '<div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#999;margin-bottom:8px">Timeline du programme</div><div class="timeline">' + items + '</div>';
-    } else if (submode === 'cours' && r.cours && Object.keys(r.cours).length) {
-      const cats = Object.entries(r.cours).filter(([,v]) => v && v.length > 0);
-      extra = '<div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#999;margin-bottom:4px">Maquette pédagogique</div><div class="cours-section">' +
-        cats.map(([cat, liste]) =>
-          '<div class="cours-categorie">' + cat + '</div>' +
-          '<div class="cours-grid">' + (liste||[]).map(c => '<div class="cours-item">' + c + '</div>').join('') + '</div>'
-        ).join('') + '</div>';
+    const desc = resumeParts[1] || '';
+    const metaTags = metaStr.split(' | ').filter(Boolean).map(m => '<span class="prog-fiche-tag">' + m + '</span>').join('');
+    const lien = s.lien || c.lien || '';
+    let timelineHtml = '';
+    if (s.structure && s.structure.length) {
+      timelineHtml = '<div class="prog-section"><div class="prog-section-title">📅 Structure — Timeline</div><div class="timeline">' +
+        s.structure.map(st => '<div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-body"><div class="timeline-period">' + (st.periode||'') + '</div><div class="timeline-content">' + (st.contenu||'') + '</div></div></div>').join('') +
+        '</div></div>';
     }
-
-    return '<div class="result-card" style="padding:1.5rem">' +
-      '<div class="result-top" style="margin-bottom:0">' +
-      '<span class="badge ' + bc + '">' + label + '</span>' +
-      (name ? '<span class="result-name" style="font-size:14px">' + name + '</span>' : '') +
-      '</div>' +
-      header + extra +
-      '<div style="margin-top:12px">' + lien + '</div>' +
-      '</div>';
-  }).join('') + '<div class="footer-note">Base de données programmes — données vérifiées sur sites officiels</div>';
+    let coursHtml = '';
+    if (c.cours && Object.keys(c.cours).length) {
+      const cats = Object.entries(c.cours).filter(([,v]) => v && v.length);
+      coursHtml = '<div class="prog-section"><div class="prog-section-title">📚 Maquette pédagogique</div><div class="cours-section">' +
+        cats.map(([cat, liste]) => '<div class="cours-categorie">' + cat + '</div><div class="cours-grid">' + liste.map(cr => '<div class="cours-item">' + cr + '</div>').join('') + '</div>').join('') +
+        '</div></div>';
+    }
+    let actuHtml = '';
+    if (a.length) {
+      actuHtml = '<div class="prog-section"><div class="prog-section-title">📰 Actualités 2024-2025</div>' +
+        a.map(r => '<div class="actu-item"><span class="actu-badge">' + (r.badge||'Actu') + '</span><div class="actu-title">' + (r.titre||'') + '</div><div class="actu-meta">' + [r.date,r.source].filter(Boolean).join(' · ') + '</div><div class="actu-body">' + (r.resume||'') + '</div>' + (r.lien ? '<a href="' + r.lien + '" target="_blank" class="result-link">→ Lire</a>' : '') + '</div>').join('') +
+        '</div>';
+    }
+    return '<div class="prog-fiche">' +
+      '<div class="prog-fiche-header"><div class="prog-fiche-title">' + key + '</div>' +
+      '<div class="prog-fiche-sub">' + (s.titre || c.titre || '') + '</div>' +
+      (metaTags ? '<div class="prog-fiche-meta">' + metaTags + '</div>' : '') +
+      (desc ? '<div style="font-size:13px;color:rgba(255,255,255,.8);margin-top:8px">' + desc + '</div>' : '') +
+      (lien ? '<a href="' + lien + '" target="_blank" style="display:inline-block;margin-top:10px;font-size:12px;color:rgba(255,255,255,.9);font-weight:600">→ Site officiel</a>' : '') +
+      '</div>' + timelineHtml + coursHtml + actuHtml + '</div>';
+  }).join('') + '<div class="footer-note">Base de données programmes + recherche web</div>';
 }
 
-async function runPays() {
-  const container = document.getElementById('results-cabinets');
-  const btn = document.getElementById('btn-pays');
-  container.innerHTML = '<div class="loading"><div class="spinner"></div>Chargement comparaison par pays…</div>';
-  if (btn) btn.disabled = true;
-  try {
-    const r = await fetch('/api/veille', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ mode: 'cabinets', submode: 'pays', user: 'comparaison recrutement par pays' })
-    });
-    const data = await r.json();
-    if (data.error) { container.innerHTML = '<div class="error-box">' + data.error + '</div>'; return; }
-    renderPays(data.pays, container);
-  } catch(err) {
-    container.innerHTML = '<div class="error-box">Erreur: ' + err.message + '</div>';
-  } finally {
-    if (btn) btn.disabled = false;
-  }
-}
-
-function renderPays(pays, container) {
-  if (!pays || !Object.keys(pays).length) { container.innerHTML = '<div class="error-box">Données non disponibles.</div>'; return; }
-  const cards = Object.entries(pays).map(([country, data]) => {
-    const specs = (data.specificites || []).map(s => '<div class="pays-spec">• ' + s + '</div>').join('');
-    const ecoles = (data.top_ecoles || []).map(e => '<span class="pays-ecole">' + e + '</span>').join('');
-    return '<div class="pays-card">' +
-      '<div class="pays-name">' + country + '</div>' +
-      '<div class="pays-marche">' + (data.marche || '') + '</div>' +
-      '<div class="pays-section-label">Spécificités recrutement</div>' + specs +
-      '<div class="pays-section-label">Top écoles</div>' +
-      '<div class="pays-ecoles">' + ecoles + '</div>' +
-      '<div><span class="pays-salaire">💰 ' + (data.salaire_junior || '') + '</span></div>' +
-      '<div class="pays-tendance">📊 ' + (data.tendance || '') + '</div>' +
-      '</div>';
-  }).join('');
-  container.innerHTML = '<div style="margin-bottom:12px"><div class="result-title" style="font-size:18px">Recrutement conseil par pays — comparaison 2025</div>' +
-    '<div style="font-size:13px;color:#888;margin-top:4px">Sources : Consultor, CaseCoach, données cabinets</div></div>' +
-    '<div class="pays-grid">' + cards + '</div>' +
-    '<div class="footer-note">Données basées sur les sources sectorielles 2024-2025</div>';
-}
-
+/* ---- CABINETS ---- */
 async function runProcessus() {
   const cab = getSelected('chips-cabinets');
   if (!cab.length) { alert('Sélectionne au moins un cabinet.'); return; }
   const container = document.getElementById('results-cabinets');
   const btn = document.getElementById('btn-processus');
-  container.innerHTML = '<div class="loading"><div class="spinner"></div>Recherche des processus de recrutement…</div>';
+  container.innerHTML = '<div class="loading"><div class="spinner"></div>Chargement des processus…</div>';
   if (btn) btn.disabled = true;
   try {
-    const r = await fetch('/api/veille', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ mode: 'cabinets', submode: 'processus', user: 'Processus de recrutement détaillé pour: ' + cab.join(', ') + '. Étapes, timing, types de tests, conseils.' })
-    });
-    if (!r.ok) { const e = await r.text(); container.innerHTML = '<div class="error-box">Erreur: ' + e + '</div>'; return; }
+    const r = await fetch('/api/veille', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({mode:'cabinets', submode:'processus', user: 'Processus de recrutement pour: ' + cab.join(', ')}) });
     const data = await r.json();
     if (data.error) { container.innerHTML = '<div class="error-box">' + data.error + '</div>'; return; }
     renderCards(data.resultats, container);
-  } catch(err) {
-    container.innerHTML = '<div class="error-box">Erreur: ' + err.message + '</div>';
-  } finally {
-    if (btn) btn.disabled = false;
+  } catch(err) { container.innerHTML = '<div class="error-box">Erreur: ' + err.message + '</div>'; }
+  finally { if (btn) btn.disabled = false; }
+}
+
+async function runPays() {
+  const cab = getSelected('chips-cabinets');
+  const container = document.getElementById('results-cabinets');
+  const btn = document.getElementById('btn-pays');
+  container.innerHTML = '<div class="loading"><div class="spinner"></div>Chargement comparaison par pays…</div>';
+  if (btn) btn.disabled = true;
+  try {
+    const r = await fetch('/api/veille', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({mode:'cabinets', submode:'pays', user: 'comparaison pays pour: ' + cab.join(', ')}) });
+    const data = await r.json();
+    if (data.error) { container.innerHTML = '<div class="error-box">' + data.error + '</div>'; return; }
+    renderPays(data.pays, data.cabinetPays, container);
+  } catch(err) { container.innerHTML = '<div class="error-box">Erreur: ' + err.message + '</div>'; }
+  finally { if (btn) btn.disabled = false; }
+}
+
+async function runTendances() {
+  const container = document.getElementById('results-cabinets');
+  const btn = document.getElementById('btn-tendances');
+  container.innerHTML = '<div class="loading"><div class="spinner"></div>Chargement tendances générales…</div>';
+  if (btn) btn.disabled = true;
+  try {
+    const r = await fetch('/api/veille', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({mode:'cabinets', submode:'tendances', user: 'tendances'}) });
+    const data = await r.json();
+    if (data.error) { container.innerHTML = '<div class="error-box">' + data.error + '</div>'; return; }
+    renderTendances(data.tendances, container);
+  } catch(err) { container.innerHTML = '<div class="error-box">Erreur: ' + err.message + '</div>'; }
+  finally { if (btn) btn.disabled = false; }
+}
+
+function renderPays(pays, cabinetPays, container) {
+  if (!pays) { container.innerHTML = '<div class="error-box">Données non disponibles.</div>'; return; }
+  const cards = Object.entries(pays).map(([country, data]) => {
+    const specs = (data.specificites||[]).map(s => '<div class="pays-spec">• ' + s + '</div>').join('');
+    const ecoles = (data.top_ecoles||[]).map(e => '<span class="pays-ecole">' + e + '</span>').join('');
+    return '<div class="pays-card"><div class="pays-name">' + country + '</div>' +
+      '<div class="pays-marche">' + (data.marche||'') + '</div>' +
+      '<div class="pays-section-label">Spécificités</div>' + specs +
+      '<div class="pays-section-label">Top écoles</div><div class="pays-ecoles">' + ecoles + '</div>' +
+      '<div><span class="pays-salaire">💰 ' + (data.salaire_junior||'') + '</span></div>' +
+      '<div class="pays-tendance">📊 ' + (data.tendance||'') + '</div></div>';
+  }).join('');
+  let cabHtml = '';
+  if (cabinetPays && Object.keys(cabinetPays).length) {
+    cabHtml = '<div style="margin-top:24px"><div style="font-size:16px;font-weight:700;color:#C8102E;margin-bottom:12px">Présence des cabinets par pays</div>' +
+      Object.entries(cabinetPays).map(([cab, pays_data]) => {
+        const rows = Object.entries(pays_data).map(([p, info]) =>
+          '<tr style="border-bottom:1px solid #f5f5f5"><td style="padding:8px 10px;font-weight:700;font-size:12px;color:#C8102E;white-space:nowrap">' + p + '</td>' +
+          '<td style="padding:8px 10px;font-size:12px;color:#555">' + (info.bureau||'') + '</td>' +
+          '<td style="padding:8px 10px;font-size:12px;color:#555">' + (info.taille||'') + '</td>' +
+          '<td style="padding:8px 10px;font-size:12px;color:#555">' + (info.secteurs||'') + '</td>' +
+          '<td style="padding:8px 10px;font-size:12px;color:#888">' + (info.specificite||'') + '</td></tr>'
+        ).join('');
+        return '<div class="result-card" style="margin-bottom:12px;overflow-x:auto">' +
+          '<div style="font-size:15px;font-weight:700;margin-bottom:10px">' + cab + '</div>' +
+          '<table style="width:100%;border-collapse:collapse;min-width:600px">' +
+          '<thead><tr style="background:#fdf5f6">' +
+          '<th style="padding:6px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:#C8102E;text-align:left">Pays</th>' +
+          '<th style="padding:6px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:#C8102E;text-align:left">Bureau</th>' +
+          '<th style="padding:6px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:#C8102E;text-align:left">Taille</th>' +
+          '<th style="padding:6px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:#C8102E;text-align:left">Secteurs</th>' +
+          '<th style="padding:6px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:#C8102E;text-align:left">Spécificité</th>' +
+          '</tr></thead><tbody>' + rows + '</tbody></table></div>';
+      }).join('') + '</div>';
   }
+  container.innerHTML = '<div style="font-size:18px;font-weight:700;color:#C8102E;margin-bottom:12px">Marchés du conseil par pays — 2025</div>' +
+    '<div class="pays-grid">' + cards + '</div>' + cabHtml +
+    '<div class="footer-note">Sources : Consultor, CaseCoach, données cabinets 2024-2025</div>';
+}
+
+function renderTendances(tendances, container) {
+  if (!tendances || !tendances.length) { container.innerHTML = '<div class="error-box">Données non disponibles.</div>'; return; }
+  container.innerHTML = '<div style="font-size:18px;font-weight:700;color:#C8102E;margin-bottom:16px">Tendances générales du marché du conseil — 2025</div>' +
+    tendances.map(t => '<div class="tendance-card"><div class="tendance-title">' + (t.titre||'') + '</div>' +
+      '<div class="tendance-body">' + (t.contenu||'') + '</div>' +
+      '<div class="tendance-source">' + (t.source||'') + '</div></div>').join('') +
+    '<div class="footer-note">Sources : Consultor, Syntec Conseil, FT, Les Echos 2024-2025</div>';
 }
 
 async function runVeille(mode) {
@@ -407,32 +435,26 @@ async function runVeille(mode) {
   let user = '';
   if (mode === 'programmes') {
     const progs = getSelected('chips-programmes');
-    const themes = getSelected('chips-themes');
-    const focus = document.getElementById('focus-programmes').value.trim();
     if (!progs.length) { container.innerHTML = '<div class="error-box">Sélectionne au moins un programme.</div>'; if(btn) btn.disabled=false; return; }
-    user = "Veille 2024-2025 sur: " + progs.join(', ') + ". Thèmes: " + themes.join(', ') + (focus ? ". Focus: " + focus : "") + ". 1 actu récente par programme.";
+    user = 'Veille 2024-2025 sur: ' + progs.join(', ');
   } else if (mode === 'cabinets') {
     const cab = getSelected('chips-cabinets');
     const types = getSelected('chips-type');
     const focus = document.getElementById('focus-cabinets').value.trim();
     if (!cab.length) { container.innerHTML = '<div class="error-box">Sélectionne au moins un cabinet.</div>'; if(btn) btn.disabled=false; return; }
-    user = "Veille 2024-2025 sur: " + cab.join(', ') + ". Types: " + types.join(', ') + (focus ? ". Focus: " + focus : "") + ". 1 info récente par cabinet.";
+    user = 'Veille 2024-2025 sur: ' + cab.join(', ') + '. Types: ' + types.join(', ') + (focus ? '. Focus: ' + focus : '');
   } else {
     const q = document.getElementById('focus-libre').value.trim();
     if (!q) { container.innerHTML = '<div class="error-box">Entre une question.</div>'; if(btn) btn.disabled=false; return; }
     user = q;
   }
   try {
-    const res = await fetch('/api/veille', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ mode, user }) });
-    if (!res.ok) { const err = await res.text(); container.innerHTML = '<div class="error-box">Erreur serveur (' + res.status + ') : ' + err + '</div>'; return; }
+    const res = await fetch('/api/veille', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({mode, user}) });
     const data = await res.json();
     if (data.error) { container.innerHTML = '<div class="error-box">' + data.error + '</div>'; return; }
     renderCards(data.resultats, container);
-  } catch(err) {
-    container.innerHTML = '<div class="error-box">Erreur : ' + err.message + '</div>';
-  } finally {
-    if (btn) btn.disabled = false;
-  }
+  } catch(err) { container.innerHTML = '<div class="error-box">Erreur : ' + err.message + '</div>'; }
+  finally { if (btn) btn.disabled = false; }
 }
 </script>
 </body>
