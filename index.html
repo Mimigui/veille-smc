@@ -57,6 +57,17 @@
     .processus-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #999; font-weight: 600; margin-bottom: 6px; }
     .processus-etapes { font-size: 13px; color: #333; line-height: 1.8; }
     .processus-meta { font-size: 12px; color: #888; margin-top: 6px; }
+    .pays-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+    .pays-card { background: #f9f9f7; border-radius: 10px; padding: 14px; border: 1px solid #e5e5e5; }
+    .pays-name { font-size: 16px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
+    .pays-marche { font-size: 13px; color: #555; line-height: 1.5; margin-bottom: 10px; }
+    .pays-section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #999; margin: 8px 0 4px; }
+    .pays-spec { font-size: 12px; color: #444; padding: 3px 0; border-bottom: 1px solid #f0f0f0; line-height: 1.5; }
+    .pays-spec:last-child { border-bottom: none; }
+    .pays-salaire { display: inline-block; font-size: 12px; background: #e6f4ea; color: #1a5c2a; padding: 3px 10px; border-radius: 99px; margin-top: 6px; }
+    .pays-tendance { font-size: 12px; color: #0066cc; background: #e6f1fb; padding: 8px 10px; border-radius: 8px; margin-top: 8px; line-height: 1.5; }
+    .pays-ecoles { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+    .pays-ecole { font-size: 11px; background: #fff; border: 1px solid #e0e0e0; padding: 2px 8px; border-radius: 99px; color: #555; }
     .results { margin-top: 1.5rem; }
     .loading { display: flex; align-items: center; gap: 10px; color: #888; font-size: 14px; padding: 1rem 0; }
     .spinner { width: 16px; height: 16px; border: 2px solid #e0e0e0; border-top-color: #1a1a1a; border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
@@ -313,6 +324,48 @@ function renderProgrammeCards(resultats, container, submode) {
       '<div style="margin-top:12px">' + lien + '</div>' +
       '</div>';
   }).join('') + '<div class="footer-note">Base de données programmes — données vérifiées sur sites officiels</div>';
+}
+
+async function runPays() {
+  const container = document.getElementById('results-cabinets');
+  const btn = document.getElementById('btn-pays');
+  container.innerHTML = '<div class="loading"><div class="spinner"></div>Chargement comparaison par pays…</div>';
+  if (btn) btn.disabled = true;
+  try {
+    const r = await fetch('/api/veille', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mode: 'cabinets', submode: 'pays', user: 'comparaison recrutement par pays' })
+    });
+    const data = await r.json();
+    if (data.error) { container.innerHTML = '<div class="error-box">' + data.error + '</div>'; return; }
+    renderPays(data.pays, container);
+  } catch(err) {
+    container.innerHTML = '<div class="error-box">Erreur: ' + err.message + '</div>';
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
+function renderPays(pays, container) {
+  if (!pays || !Object.keys(pays).length) { container.innerHTML = '<div class="error-box">Données non disponibles.</div>'; return; }
+  const cards = Object.entries(pays).map(([country, data]) => {
+    const specs = (data.specificites || []).map(s => '<div class="pays-spec">• ' + s + '</div>').join('');
+    const ecoles = (data.top_ecoles || []).map(e => '<span class="pays-ecole">' + e + '</span>').join('');
+    return '<div class="pays-card">' +
+      '<div class="pays-name">' + country + '</div>' +
+      '<div class="pays-marche">' + (data.marche || '') + '</div>' +
+      '<div class="pays-section-label">Spécificités recrutement</div>' + specs +
+      '<div class="pays-section-label">Top écoles</div>' +
+      '<div class="pays-ecoles">' + ecoles + '</div>' +
+      '<div><span class="pays-salaire">💰 ' + (data.salaire_junior || '') + '</span></div>' +
+      '<div class="pays-tendance">📊 ' + (data.tendance || '') + '</div>' +
+      '</div>';
+  }).join('');
+  container.innerHTML = '<div style="margin-bottom:12px"><div class="result-title" style="font-size:18px">Recrutement conseil par pays — comparaison 2025</div>' +
+    '<div style="font-size:13px;color:#888;margin-top:4px">Sources : Consultor, CaseCoach, données cabinets</div></div>' +
+    '<div class="pays-grid">' + cards + '</div>' +
+    '<div class="footer-note">Données basées sur les sources sectorielles 2024-2025</div>';
 }
 
 async function runProcessus() {
