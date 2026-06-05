@@ -312,7 +312,7 @@ export default async function handler(req, res) {
     if (submode === 'processus') {
       const cabinets = user.replace('Processus de recrutement détaillé pour: ', '').replace(/\. .+$/, '').split(', ');
       const d = await call({
-        model: 'claude-haiku-4-5', max_tokens: 1500,
+        model: 'claude-haiku-4-5-20251001', max_tokens: 1500,
         tools: [{ type: 'web_search_20250305', name: 'web_search' }],
         system: `Expert recrutement cabinets conseil. Pour chaque cabinet, donne le processus exact. Réponds UNIQUEMENT en JSON: {"resultats":[{"nom":"cabinet","badge":"Recrutement","titre":"Processus — cabinet","date":"2024-2025","source":"site officiel","lien":"url careers","resume":"résumé français","processus":{"etapes":["1. étape","2. étape","3. étape","4. étape"],"timing":"X semaines","tests":"types tests","conseils":"conseil clé"}}]}`,
         messages: [{ role: 'user', content: `Processus recrutement détaillé pour: ${cabinets.join(', ')}` }],
@@ -324,7 +324,7 @@ export default async function handler(req, res) {
           { role: 'assistant', content: c },
           { role: 'user', content: c.filter(b => b.type === 'tool_use').map(b => ({ type: 'tool_result', tool_use_id: b.id, content: 'OK' })) }
         ];
-        const d2 = await call({ model: 'claude-haiku-4-5', max_tokens: 1200, system: `Réponds UNIQUEMENT en JSON: {"resultats":[{"nom":"","badge":"Recrutement","titre":"","date":"2025","source":"","lien":"","resume":"","processus":{"etapes":[],"timing":"","tests":"","conseils":""}}]}`, messages: msgs });
+        const d2 = await call({ model: 'claude-haiku-4-5-20251001', max_tokens: 1200, system: `Réponds UNIQUEMENT en JSON: {"resultats":[{"nom":"","badge":"Recrutement","titre":"","date":"2025","source":"","lien":"","resume":"","processus":{"etapes":[],"timing":"","tests":"","conseils":""}}]}`, messages: msgs });
         const t2 = d2.content?.find(b => b.type === 'text')?.text || '';
         const p2 = extractJSON(t2);
         if (p2?.resultats?.length) return res.status(200).json(p2);
@@ -342,10 +342,11 @@ export default async function handler(req, res) {
     const jsonFormat = mode === 'cabinets'
       ? `{"resultats":[{"nom":"cabinet","badge":"Actualité","titre":"titre précis","date":"mois année","source":"nom source","lien":"https://url","resume":"1-2 phrases français"}]}`
       : `{"resultats":[{"nom":"programme","badge":"Programme","titre":"titre précis","date":"mois année","source":"nom source","resume":"1-2 phrases français"}]}`;
-    const system = `Veille MSc SMC SKEMA. Sources: ${sources}. Langues: FR EN IT DE ES. Résumés en français. JSON UNIQUEMENT: ${jsonFormat}`;
+    const shortFormat = mode === 'cabinets' ? '{"resultats":[{"nom":"","badge":"Actualité","titre":"","date":"","source":"","lien":"","resume":""}]}' : '{"resultats":[{"nom":"","badge":"Programme","titre":"","date":"","source":"","resume":""}]}';
+    const system = `Veille SMC. Sources: ${sources}. Langue: FR. JSON: ${shortFormat}`;
 
     // Appel unique avec web search
-    const d1 = await call({ model: 'claude-haiku-4-5', max_tokens: 800, tools: [{ type: 'web_search_20250305', name: 'web_search' }], system, messages: [{ role: 'user', content: user }] });
+    const d1 = await call({ model: 'claude-haiku-4-5-20251001', max_tokens: 500, tools: [{ type: 'web_search_20250305', name: 'web_search' }], system, messages: [{ role: 'user', content: user }] });
     const c1 = d1.content || [];
     
     if (d1.stop_reason === 'tool_use') {
@@ -354,12 +355,12 @@ export default async function handler(req, res) {
         { role: 'assistant', content: c1 },
         { role: 'user', content: c1.filter(b => b.type === 'tool_use').map(b => ({ type: 'tool_result', tool_use_id: b.id, content: 'OK' })) }
       ];
-      const d2 = await call({ model: 'claude-haiku-4-5', max_tokens: 600, system, messages: msgs2 });
+      const d2 = await call({ model: 'claude-haiku-4-5-20251001', max_tokens: 600, system, messages: msgs2 });
       const t2 = d2.content?.find(b => b.type === 'text')?.text || '';
       const p2 = extractJSON(t2);
       if (p2?.resultats?.length) return res.status(200).json(p2);
       // Dernier recours : formater sans web search
-      const d3 = await call({ model: 'claude-haiku-4-5', max_tokens: 500, messages: [{ role: 'user', content: `JSON strict uniquement (commence par {): ${jsonFormat}\n\nInfos: ${t2.slice(0,1000)}` }] });
+      const d3 = await call({ model: 'claude-haiku-4-5-20251001', max_tokens: 500, messages: [{ role: 'user', content: `JSON strict uniquement (commence par {): ${jsonFormat}\n\nInfos: ${t2.slice(0,1000)}` }] });
       const t3 = d3.content?.find(b => b.type === 'text')?.text || '';
       const p3 = extractJSON(t3);
       if (p3?.resultats?.length) return res.status(200).json(p3);
