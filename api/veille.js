@@ -1,3 +1,72 @@
+// Base de données cabinets — processus recrutement et veille
+const CABINETS = {
+  "McKinsey": {
+    nom: "McKinsey & Company",
+    lien_carrieres: "https://www.mckinsey.com/careers",
+    resume: "Cabinet #1 mondial en volume d'activité. Très présent en France (Paris 8e). Recrute principalement via les grandes écoles françaises (HEC, Polytechnique, ESSEC, ESCP).",
+    actu: { titre: "McKinsey #1 mondial mais BCG en forte progression", date: "Mai 2026", source: "Consultor", lien: "https://www.consultor.fr", resume: "McKinsey occupe toujours la première place sur le marché du conseil en stratégie en volume d'activité, mais l'écart se réduit avec BCG qui pourrait le rattraper. En parallèle, McKinsey demande à sa branche chinoise de ne pas s'impliquer dans des projets GenAI." },
+    processus: {
+      etapes: ["1. Candidature en ligne (CV + lettre de motivation)", "2. Test PST (Problem Solving Test) — 26 questions en 60 min", "3. Premier entretien : 2 case studies + fit questions", "4. Deuxième entretien : 2 case studies avancés + entretien partner", "5. Décision finale (sous 2-3 semaines)"],
+      timing: "4 à 8 semaines au total",
+      tests: "PST (Problem Solving Test) : test de raisonnement analytique sur données. Depuis 2022, McKinsey utilise aussi le Imbellus game dans certains pays.",
+      conseils: "Préparer intensivement les case studies (minimum 50 cas). McKinsey valorise la rigueur analytique et la capacité à structurer rapidement un problème complexe.",
+      salaire_junior: "65 000 – 75 000 € brut/an (Business Analyst)"
+    }
+  },
+  "BCG": {
+    nom: "Boston Consulting Group",
+    lien_carrieres: "https://www.bcg.com/careers",
+    resume: "2e cabinet mondial, en forte croissance en France. BCG a recruté 2x plus que McKinsey et 3x plus que Bain en France (2020-2022). Culture analytique et défense du raisonnement sous pression.",
+    actu: { titre: "BCG : croissance soutenue malgré le marché tendu", date: "Mai 2026", source: "Consultor", lien: "https://www.consultor.fr", resume: "BCG résiste mieux que ses concurrents dans un marché du conseil en stagnation (-2% à +1% en 2025 selon Syntec). Le cabinet maintient ses recrutements juniors quand d'autres gèlent. Roland Berger a repassé la barre du milliard d'euros de CA en 2025." },
+    processus: {
+      etapes: ["1. Candidature en ligne (CV + cover letter)", "2. Test en ligne : BCG Online Case (simulation de mission)", "3. Premier tour : 2 entretiens case study + questions comportementales", "4. Deuxième tour : 2 entretiens avancés avec seniors/partners", "5. Offre (décision sous 1-2 semaines après le 2e tour)"],
+      timing: "3 à 6 semaines",
+      tests: "BCG Online Case : simulation d'une vraie mission de conseil (analyse de données, recommandations). Plus représentatif qu'un test papier.",
+      conseils: "BCG valorise la rigueur analytique et la capacité à défendre un raisonnement sous pression. Préparer des cas avec un partenaire est indispensable. Mettre en avant des accomplissements chiffrés dans le CV.",
+      salaire_junior: "65 000 – 75 000 € brut/an (Consultant)"
+    }
+  },
+  "Bain": {
+    nom: "Bain & Company",
+    lien_carrieres: "https://www.bain.com/careers",
+    resume: "3e cabinet MBB, culture très axée sur le travail d'équipe et les résultats concrets. Bain Paris reçoit ~3 000 CV/an, retient 1 400 pour entretiens, embauche 80 personnes.",
+    actu: { titre: "Bain ouvre un bureau à Montréal, Matthieu Vigneron nommé leader", date: "Automne 2025", source: "Consultor", lien: "https://www.consultor.fr", resume: "Matthieu Vigneron, Partner français de Bain depuis 20 ans, dirige le nouveau bureau de Montréal ouvert à l'automne 2025. Par ailleurs, Bain a décidé de ne plus mener aucune mission en Afrique du Sud, 7 ans après un scandale sous la présidence Zuma." },
+    processus: {
+      etapes: ["1. Candidature en ligne — CV évalué sur 4 critères : résolution de problème, impact personnel, leadership, esprit entrepreneurial", "2. Test analytique (30 min) : compétences calculatoires et analytiques", "3. Premier entretien : case study + entretien fit avec un opérationnel", "4. Deuxième entretien : case study avancé + entretien partner", "5. Décision finale"],
+      timing: "4 à 8 semaines",
+      tests: "Test calculatoire propre à Bain (30 min) + case studies. Bain est le seul MBB à commencer par un test calculatoire avant les entretiens.",
+      conseils: "Bain cherche des profils avec un réel esprit d'équipe et une orientation résultats. 70% des candidatures éliminées dès le screening CV. Le même CV qui passe chez McKinsey ne passe pas mécaniquement chez Bain.",
+      salaire_junior: "62 000 – 72 000 € brut/an (Associate Consultant)"
+    }
+  },
+  "Deloitte": {
+    nom: "Deloitte Consulting",
+    lien_carrieres: "https://www2.deloitte.com/fr/fr/careers.html",
+    resume: "Plus grand cabinet de conseil et d'audit au monde (Big Four). Deloitte Strategy & Operations recrute des profils business/stratégie, tandis que Monitor Deloitte se positionne sur la stratégie pure.",
+    actu: { titre: "Deloitte restructure ses activités conseil en France", date: "2025", source: "Consultor / presse", lien: "https://www.consultor.fr", resume: "Comme les autres Big Four, Deloitte fait face à une pression sur ses marges conseil. Le cabinet mise sur l'IA et la transformation digitale comme relais de croissance pour compenser le ralentissement des missions traditionnelles." },
+    processus: {
+      etapes: ["1. Candidature en ligne sur deloitte.com/careers", "2. Tests en ligne : raisonnement logique, verbal, numérique (30-45 min)", "3. Entretien RH : motivation, parcours, compétences comportementales", "4. Entretien technique : case study ou étude de cas sectorielle", "5. Assessment center (pour certains postes) ou entretien final avec manager"],
+      timing: "3 à 8 semaines",
+      tests: "Tests psychométriques SHL ou Korn Ferry (raisonnement logique, numérique, verbal) + case study moins structuré que MBB.",
+      conseils: "Moins sélectif que les MBB sur les case studies, mais fort accent sur la motivation sectorielle et la connaissance du cabinet. Mentionner les spécialités de Deloitte (IA, ESG, transformation).",
+      salaire_junior: "45 000 – 55 000 € brut/an (Consultant)"
+    }
+  },
+  "Roland Berger": {
+    nom: "Roland Berger",
+    lien_carrieres: "https://www.rolandberger.com/fr/Careers/",
+    resume: "Seul grand cabinet de conseil en stratégie d'origine européenne (allemand). Très présent en France, Allemagne, Italie. A repassé la barre du milliard d'euros de CA en 2025.",
+    actu: { titre: "Roland Berger franchit 1 milliard d'euros de CA en 2025", date: "Mai 2026", source: "Consultor", lien: "https://www.consultor.fr/articles", resume: "Roland Berger repasse la barre du milliard d'euros de chiffre d'affaires en 2025, seuil symbolique atteint pour la seconde fois après 2023. Le cabinet continue de recruter des talents senior, notamment Eight Advisory qui recrute une associée Life Sciences chez Roland Berger." },
+    processus: {
+      etapes: ["1. Candidature en ligne (CV + lettre de motivation en français ou anglais)", "2. Entretien RH : parcours, motivation, culture Roland Berger", "3. Premier entretien : case study industrie/stratégie + questions de fit", "4. Deuxième entretien : case study plus complexe + entretien avec partner", "5. Décision sous 2-3 semaines"],
+      timing: "4 à 6 semaines",
+      tests: "Pas de test PST formalisé. Les case studies sont souvent sectoriels (industrie, énergie, automobile — secteurs forts de Roland Berger).",
+      conseils: "Roland Berger valorise les profils avec une dimension internationale et une culture européenne. Connaître les secteurs phares du cabinet (industrie, energie, santé) est un plus. Culture plus collaborative que McKinsey.",
+      salaire_junior: "58 000 – 68 000 € brut/an (Junior Consultant)"
+    }
+  }
+};
+
 // Base de données des 10 programmes concurrents
 const PROGRAMMES = {
   "Bocconi": {
@@ -311,6 +380,20 @@ export default async function handler(req, res) {
     // PROCESSUS RECRUTEMENT
     if (submode === 'processus') {
       const cabinets = user.replace('Processus de recrutement détaillé pour: ', '').replace(/\. .+$/, '').split(', ');
+      // Utiliser la base de données locale en priorité
+      const localResults = cabinets.slice(0,5).map(cab => {
+        for (const [key, val] of Object.entries(CABINETS)) {
+          if (cab.toLowerCase().includes(key.toLowerCase()) || key.toLowerCase().includes(cab.toLowerCase().split(' ')[0])) {
+            return {
+              nom: val.nom, badge: "Recrutement", titre: "Processus de recrutement — " + val.nom,
+              date: "2024-2025", source: "Consultor / sites officiels", lien: val.lien_carrieres,
+              resume: val.resume, processus: val.processus
+            };
+          }
+        }
+        return null;
+      }).filter(Boolean);
+      if (localResults.length > 0) return res.status(200).json({ resultats: localResults });
       const d = await call({
         model: 'claude-haiku-4-5-20251001', max_tokens: 1500,
         tools: [{ type: 'web_search_20250305', name: 'web_search' }],
@@ -336,6 +419,20 @@ export default async function handler(req, res) {
     }
 
     // MODE NORMAL (veille actualités)
+    // Pour les cabinets, utiliser la DB locale en priorité
+    if (mode === 'cabinets') {
+      const selectedCabs = user.split(' | ').map(s => s.replace(/Veille .+ sur: /, '').split(',').map(c => c.trim())).flat().filter(Boolean);
+      const localNews = [];
+      for (const cab of selectedCabs) {
+        for (const [key, val] of Object.entries(CABINETS)) {
+          if (cab.toLowerCase().includes(key.toLowerCase())) {
+            localNews.push({ nom: val.nom, badge: "Actualité", titre: val.actu.titre, date: val.actu.date, source: val.actu.source, lien: val.actu.lien, resume: val.actu.resume });
+            break;
+          }
+        }
+      }
+      if (localNews.length > 0) return res.status(200).json({ resultats: localNews });
+    }
     const sources = mode === 'cabinets'
       ? 'Consultor (consultor.fr), LinkedIn, Financial Times, Les Echos, sites officiels des cabinets'
       : 'LinkedIn, Financial Times, Les Echos, sites officiels des programmes';
