@@ -342,34 +342,35 @@ export default async function handler(req, res) {
     const jsonFormat = mode === 'cabinets'
       ? `{"resultats":[{"nom":"cabinet","badge":"Actualité","titre":"titre précis","date":"mois année","source":"nom source","lien":"https://url","resume":"1-2 phrases français"}]}`
       : `{"resultats":[{"nom":"programme","badge":"Programme","titre":"titre précis","date":"mois année","source":"nom source","resume":"1-2 phrases français"}]}`;
-    const system = `Agent de veille MSc SMC SKEMA. Sources: ${sources}. Langues: FR EN IT DE ES. Résumés en français.${mode === 'cabinets' ? ' Inclure URL dans lien.' : ''} Réponds UNIQUEMENT avec ce JSON: ${jsonFormat}`;
+    const system = `Agent de veille MSc SMC SKEMA. Sources: ${sources}. Langues: FR EN IT DE ES. Résumés en français.${mode === 'cabinets' ? ' Inclure URL dans lien.' : ''} Réponds UNIQUEMENT avec ce JSON (commence par {, finis par }): ${jsonFormat}`;
 
-    const d1 = await call({
-      model: 'claude-haiku-4-5', max_tokens: 1000,
-      tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-      system, messages: [{ role: 'user', content: user }],
-    });
-    const c1 = d1.content || [];
-    if (d1.stop_reason === 'tool_use') {
-      const msgs = [
-        { role: 'user', content: user },
-        { role: 'assistant', content: c1 },
-        { role: 'user', content: c1.filter(b => b.type === 'tool_use').map(b => ({ type: 'tool_result', tool_use_id: b.id, content: 'OK' })) }
-      ];
-      const d2 = await call({ model: 'claude-haiku-4-5', max_tokens: 800, system, tools: [{ type: 'web_search_20250305', name: 'web_search' }], messages: msgs });
-      const t2 = d2.content?.find(b => b.type === 'text')?.text || '';
-      const p2 = extractJSON(t2);
-      if (p2?.resultats?.length) return res.status(200).json(p2);
-      const df = await call({ model: 'claude-haiku-4-5', max_tokens: 600, messages: [{ role: 'user', content: `JSON strict seulement: ${jsonFormat}\n\n${t2.slice(0,1500)}` }] });
+    // Boucle outil : max 6 tours
+    let messages = [{ role: 'user', content: user }];
+    let lastText = '';
+    for (let i = 0; i < 6; i++) {
+      const d = await call({ model: 'claude-haiku-4-5', max_tokens: 1000, tools: [{ type: 'web_search_20250305', name: 'web_search' }], system, messages });
+      const content = d.content || [];
+      if (d.stop_reason === 'end_turn') {
+        lastText = content.find(b => b.type === 'text')?.text || '';
+        const p = extractJSON(lastText);
+        if (p?.resultats?.length) return res.status(200).json(p);
+        break;
+      }
+      if (d.stop_reason === 'tool_use') {
+        messages.push({ role: 'assistant', content });
+        messages.push({ role: 'user', content: content.filter(b => b.type === 'tool_use').map(b => ({ type: 'tool_result', tool_use_id: b.id, content: 'Search done.' })) });
+        continue;
+      }
+      break;
+    }
+    // Fallback formatage
+    if (lastText.length > 30) {
+      const df = await call({ model: 'claude-haiku-4-5', max_tokens: 700, messages: [{ role: 'user', content: `Extrais les infos et formate en JSON strict (UNIQUEMENT le JSON, commence par {):\n${jsonFormat}\n\nTexte:\n${lastText.slice(0,2000)}` }] });
       const tf = df.content?.find(b => b.type === 'text')?.text || '';
       const pf = extractJSON(tf);
       if (pf?.resultats?.length) return res.status(200).json(pf);
-      return res.status(200).json({ resultats: [{ nom: '', badge: 'Actualité', titre: 'Résultat', date: '2025', source: '', resume: t2.slice(0, 300) }] });
     }
-    const t1 = c1.find(b => b.type === 'text')?.text || '';
-    const p1 = extractJSON(t1);
-    if (p1?.resultats?.length) return res.status(200).json(p1);
-    return res.status(200).json({ resultats: [{ nom: '', badge: 'Actualité', titre: 'Résultat', date: '2025', source: '', resume: t1.slice(0, 300) }] });
+    return res.status(200).json({ resultats: [{ nom: '', badge: 'Actualité', titre: 'Résultat', date: '2025', source: '', resume: lastText.slice(0, 300) || 'Aucun résultat.' }] });
 
   } catch (err) {
     return res.status(500).json({ error: err.message });
