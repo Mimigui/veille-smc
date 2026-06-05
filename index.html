@@ -1,62 +1,355 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.5">
-  <style type="text/css">
-    body {background-color: #f2f3f0}
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 15.0px '.SF NS'; color: #141414; -webkit-text-stroke: #141414}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'; color: #757575; -webkit-text-stroke: #757575}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 13.0px '.SF NS'; color: #141414; -webkit-text-stroke: #141414; background-color: #ffffff}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 13.0px 'Helvetica Neue'; color: #535353; -webkit-text-stroke: #535353}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px '.SF NS'; color: #878787; -webkit-text-stroke: #878787}
-    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 11.0px 'Helvetica Neue'; color: #757575; -webkit-text-stroke: #757575}
-    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #ffffff; -webkit-text-stroke: #ffffff; background-color: #141414}
-    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #141414; -webkit-text-stroke: #141414; min-height: 15.0px}
-    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #434343; -webkit-text-stroke: #434343; background-color: #f9f9f9}
-    p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'; color: #141414; -webkit-text-stroke: #141414; background-color: #ffffff; min-height: 16.0px}
-    p.p11 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 13.0px '.SF NS'; color: #ffffff; -webkit-text-stroke: #ffffff; background-color: #141414}
-    span.s1 {font-kerning: none; background-color: #ffffff}
-    span.s2 {font-kerning: none; color: #094ec0; background-color: #ffffff; -webkit-text-stroke: 0px #094ec0}
-    span.s3 {font-kerning: none}
-    span.s4 {font-kerning: none; background-color: #ebebe9}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Veille SMC — SKEMA</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f3; color: #1a1a1a; min-height: 100vh; }
+    header { background: #fff; border-bottom: 1px solid #e5e5e5; padding: 0 2rem; display: flex; align-items: center; gap: 1rem; height: 56px; }
+    header .logo { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+    header .logo span { color: #0066cc; }
+    header .subtitle { font-size: 13px; color: #888; border-left: 1px solid #e5e5e5; padding-left: 1rem; margin-left: 0.5rem; }
+    main { max-width: 820px; margin: 2rem auto; padding: 0 1.5rem; }
+    .tabs { display: flex; gap: 2px; background: #efefed; border-radius: 10px; padding: 3px; margin-bottom: 1.5rem; width: fit-content; }
+    .tab { font-size: 13px; padding: 6px 16px; border-radius: 8px; border: none; background: none; color: #666; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    .tab.active { background: #fff; color: #1a1a1a; font-weight: 500; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .tab:hover:not(.active) { color: #1a1a1a; }
+    .section { display: none; }
+    .section.active { display: block; }
+    .panel { background: #fff; border-radius: 12px; border: 1px solid #e5e5e5; padding: 1.5rem; margin-bottom: 1rem; }
+    .panel-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #999; font-weight: 600; margin-bottom: 10px; }
+    .chip-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 0.5rem; }
+    .chip { font-size: 12px; padding: 5px 12px; border-radius: 99px; border: 1px solid #e0e0e0; background: #fafafa; color: #555; cursor: pointer; user-select: none; transition: all 0.1s; }
+    .chip.selected { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .chip:hover:not(.selected) { border-color: #999; color: #1a1a1a; }
+    .select-row { display: flex; gap: 8px; margin-bottom: 10px; }
+    .select-row button { font-size: 11px; padding: 3px 10px; border-radius: 99px; border: 1px solid #e0e0e0; background: none; color: #888; cursor: pointer; font-family: inherit; }
+    .select-row button:hover { color: #1a1a1a; border-color: #999; }
+    .input-row { display: flex; gap: 8px; margin-top: 1rem; }
+    .input-row input { flex: 1; font-size: 13px; padding: 9px 14px; border-radius: 8px; border: 1px solid #e0e0e0; background: #fff; color: #1a1a1a; font-family: inherit; outline: none; transition: border-color 0.15s; }
+    .input-row input:focus { border-color: #0066cc; }
+    .input-row input::placeholder { color: #bbb; }
+    .btn-primary { font-size: 13px; padding: 9px 18px; border-radius: 8px; border: none; background: #1a1a1a; color: #fff; cursor: pointer; font-family: inherit; font-weight: 500; white-space: nowrap; transition: background 0.15s; }
+    .btn-primary:hover { background: #333; }
+    .btn-primary:disabled { background: #ccc; cursor: not-allowed; }
+    .btn-secondary { font-size: 13px; padding: 9px 18px; border-radius: 8px; border: 1px solid #1a1a1a; background: #fff; color: #1a1a1a; cursor: pointer; font-family: inherit; font-weight: 500; white-space: nowrap; transition: all 0.15s; }
+    .btn-secondary:hover { background: #f5f5f3; }
+    .btn-secondary:disabled { border-color: #ccc; color: #ccc; cursor: not-allowed; }
+    .result-link { display: inline-block; margin-top: 8px; font-size: 12px; color: #0066cc; text-decoration: none; }
+    .result-link:hover { text-decoration: underline; }
+    .timeline { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+    .timeline-item { display: flex; gap: 10px; align-items: flex-start; }
+    .timeline-dot { width: 10px; height: 10px; border-radius: 50%; background: #1a1a1a; flex-shrink: 0; margin-top: 4px; }
+    .timeline-line { width: 1px; background: #e0e0e0; flex-shrink: 0; margin: 0 4px; }
+    .timeline-content { font-size: 13px; color: #333; line-height: 1.5; }
+    .timeline-period { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.05em; }
+    .cours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 10px; }
+    .cours-item { font-size: 12px; padding: 5px 8px; background: #f5f5f3; border-radius: 6px; color: #333; }
+    .cours-categorie { font-size: 11px; font-weight: 600; color: #0066cc; text-transform: uppercase; margin-top: 8px; margin-bottom: 4px; letter-spacing: 0.05em; }
+    .processus-box { margin-top: 10px; padding: 10px 14px; background: #f9f9f7; border-radius: 8px; border: 1px solid #efefed; }
+    .processus-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #999; font-weight: 600; margin-bottom: 6px; }
+    .processus-etapes { font-size: 13px; color: #333; line-height: 1.8; }
+    .processus-meta { font-size: 12px; color: #888; margin-top: 6px; }
+    .results { margin-top: 1.5rem; }
+    .loading { display: flex; align-items: center; gap: 10px; color: #888; font-size: 14px; padding: 1rem 0; }
+    .spinner { width: 16px; height: 16px; border: 2px solid #e0e0e0; border-top-color: #1a1a1a; border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .result-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 10px; }
+    .result-card:hover { border-color: #ccc; }
+    .result-top { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .badge { font-size: 11px; padding: 2px 8px; border-radius: 99px; font-weight: 500; }
+    .badge-prog  { background: #dbeafe; color: #1e40af; }
+    .badge-actu  { background: #ede9fe; color: #5b21b6; }
+    .badge-recru { background: #fef3c7; color: #92400e; }
+    .badge-new   { background: #d1fae5; color: #065f46; }
+    .result-name { font-size: 12px; font-weight: 600; color: #555; }
+    .result-title { font-size: 14px; font-weight: 600; color: #1a1a1a; line-height: 1.4; }
+    .result-meta { font-size: 11px; color: #aaa; margin-top: 3px; }
+    .result-body { font-size: 13px; color: #555; line-height: 1.6; margin-top: 8px; }
+    .error-box { background: #fff5f5; border: 1px solid #fecaca; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #991b1b; }
+    .footer-note { font-size: 11px; color: #bbb; text-align: right; margin-top: 6px; }
+    .divider { border: none; border-top: 1px solid #f0f0f0; margin: 1rem 0; }
   </style>
 </head>
 <body>
-<p class="p1"><span class="s1"><b>Veille </b></span><span class="s2"><b>SMC</b><b></b></span></p>
-<p class="p2"><span class="s1">Agent de veille — Programmes &amp; Cabinets de conseil</span></p>
-<p class="p3"><span class="s3">Programmes concurrents</span></p>
-<p class="p4"><span class="s4">Cabinets de conseil</span></p>
-<p class="p4"><span class="s4">Question libre</span></p>
-<p class="p5"><span class="s1"><b>PROGRAMMES À SURVEILLER</b><b></b></span></p>
-<p class="p6"><span class="s1">Tout sélectionner</span></p>
-<p class="p6"><span class="s1">Tout désélectionner</span></p>
-<p class="p7"><span class="s3">Bocconi</span></p>
-<p class="p7"><span class="s3">EDHEC</span></p>
-<p class="p7"><span class="s3">emlyon</span></p>
-<p class="p7"><span class="s3">ESCP</span></p>
-<p class="p7"><span class="s3">ESSEC SMIB</span></p>
-<p class="p7"><span class="s3">HEC Paris</span></p>
-<p class="p7"><span class="s3">HHL Leipzig</span></p>
-<p class="p7"><span class="s3">IE Business School</span></p>
-<p class="p7"><span class="s3">St. Gallen HSG</span></p>
-<p class="p7"><span class="s3">Warwick</span></p>
-<p class="p8"><span class="s3"></span><br></p>
-<p class="p5"><span class="s1"><b>THÈMES</b><b></b></span></p>
-<p class="p7"><span class="s3">Accréditations et classements</span></p>
-<p class="p7"><span class="s3">Nouveaux partenariats</span></p>
-<p class="p7"><span class="s3">Évolutions curriculum</span></p>
-<p class="p9"><span class="s3">Tracks IA et digital</span></p>
-<p class="p9"><span class="s3">Double-diplômes</span></p>
-<p class="p9"><span class="s3">Débouchés et employabilité</span></p>
-<p class="p10"><span class="s3"></span><br></p>
-<p class="p11"><span class="s3">Lancer →</span></p>
-<p class="p3"><span class="s3">Structure →</span></p>
-<p class="p3"><span class="s3">Cours →</span></p>
-<p class="p8"><span class="s3"></span><br></p>
+<header>
+  <div class="logo">Veille <span>SMC</span></div>
+  <div class="subtitle">Agent de veille — Programmes &amp; Cabinets de conseil</div>
+</header>
+<main>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('programmes')">Programmes concurrents</button>
+    <button class="tab" onclick="switchTab('cabinets')">Cabinets de conseil</button>
+    <button class="tab" onclick="switchTab('libre')">Question libre</button>
+  </div>
+
+  <div id="tab-programmes" class="section active">
+    <div class="panel">
+      <div class="panel-label">Programmes à surveiller</div>
+      <div class="select-row">
+        <button onclick="selectAll('chips-programmes')">Tout sélectionner</button>
+        <button onclick="selectNone('chips-programmes')">Tout désélectionner</button>
+      </div>
+      <div class="chip-grid" id="chips-programmes">
+        <span class="chip selected" data-full="Bocconi MSc International Management — Concentration in Consulting" data-url="https://www.unibocconi.it/en/programs/master-science/international-management/concentration-consulting" onclick="toggleChip(this)">Bocconi</span>
+        <span class="chip selected" data-full="EDHEC MSc in Strategy, Organisation and Consulting" data-url="https://www.edhec.edu/en/programmes/masters-degree/business-degrees/msc-in-strategy-organisation-and-consulting" onclick="toggleChip(this)">EDHEC</span>
+        <span class="chip selected" data-full="emlyon Master in Strategy and Consulting" data-url="https://en.em-lyon.com.cn/program/msc-in-strategy-consulting/curriculum" onclick="toggleChip(this)">emlyon</span>
+        <span class="chip selected" data-full="ESCP MSc Stratégie Conseil et Organisation" data-url="https://escp.eu/programmes/specialised-masters-MSc/MSc-strategie-conseil-organisation" onclick="toggleChip(this)">ESCP</span>
+        <span class="chip selected" data-full="ESSEC MSc in Strategy, Management and International Business (SMIB)" data-url="https://www.essec.edu/en/program/master-strategy-management-international-business/?tab=program" onclick="toggleChip(this)">ESSEC SMIB</span>
+        <span class="chip selected" data-full="HEC Paris Master in Strategic Management" data-url="https://www.hec.edu/en/master-s-programs/master-strategic-management" onclick="toggleChip(this)">HEC Paris</span>
+        <span class="chip selected" data-full="HHL Leipzig MSc in Management and Business Consulting" data-url="https://www.hhl.de/programs/full-time-master-in-management-consulting/" onclick="toggleChip(this)">HHL Leipzig</span>
+        <span class="chip selected" data-full="IE Master in Management and Strategy" data-url="https://www.ie.edu/business-school/programs/masters/master-in-management-and-strategy/" onclick="toggleChip(this)">IE Business School</span>
+        <span class="chip selected" data-full="St. Gallen Master in Strategy and International Management (SIM)" data-url="https://www.unisg.ch/en/studying/programmes/master/strategy-and-international-management-sim/" onclick="toggleChip(this)">St. Gallen HSG</span>
+        <span class="chip selected" data-full="Warwick MSc Business with Consulting" data-url="https://www.wbs.ac.uk/courses/masters/business-consulting/" onclick="toggleChip(this)">Warwick</span>
+      </div>
+      <div class="divider"></div>
+      <div class="panel-label">Thèmes</div>
+      <div class="chip-grid" id="chips-themes">
+        <span class="chip selected" onclick="toggleChip(this)">Accréditations et classements</span>
+        <span class="chip selected" onclick="toggleChip(this)">Nouveaux partenariats</span>
+        <span class="chip selected" onclick="toggleChip(this)">Évolutions curriculum</span>
+        <span class="chip" onclick="toggleChip(this)">Tracks IA et digital</span>
+        <span class="chip" onclick="toggleChip(this)">Double-diplômes</span>
+        <span class="chip" onclick="toggleChip(this)">Débouchés et employabilité</span>
+      </div>
+      <div class="input-row">
+        <input id="focus-programmes" type="text" placeholder="Précision optionnelle (ex: partenariats, lancements 2025…)" />
+        <button class="btn-primary" id="btn-programmes" onclick="runVeille('programmes')">Lancer →</button>
+        <button class="btn-secondary" id="btn-structure" onclick="runProgramme('structure')">Structure →</button>
+        <button class="btn-secondary" id="btn-cours" onclick="runProgramme('cours')">Cours →</button>
+      </div>
+    </div>
+    <div class="results" id="results-programmes"></div>
+  </div>
+
+  <div id="tab-cabinets" class="section">
+    <div class="panel">
+      <div class="panel-label">Cabinets à surveiller</div>
+      <div class="select-row">
+        <button onclick="selectAll('chips-cabinets')">Tout sélectionner</button>
+        <button onclick="selectNone('chips-cabinets')">Tout désélectionner</button>
+      </div>
+      <div class="chip-grid" id="chips-cabinets">
+        <span class="chip selected" onclick="toggleChip(this)">McKinsey</span>
+        <span class="chip selected" onclick="toggleChip(this)">BCG</span>
+        <span class="chip selected" onclick="toggleChip(this)">Bain</span>
+        <span class="chip selected" onclick="toggleChip(this)">Deloitte</span>
+        <span class="chip selected" onclick="toggleChip(this)">Roland Berger</span>
+        <span class="chip" onclick="toggleChip(this)">Oliver Wyman</span>
+        <span class="chip" onclick="toggleChip(this)">Kearney</span>
+        <span class="chip" onclick="toggleChip(this)">EY-Parthenon</span>
+        <span class="chip" onclick="toggleChip(this)">Accenture Strategy</span>
+        <span class="chip" onclick="toggleChip(this)">Sia Partners</span>
+      </div>
+      <div class="divider"></div>
+      <div class="panel-label">Type d'information</div>
+      <div class="chip-grid" id="chips-type">
+        <span class="chip selected" onclick="toggleChip(this)">Actualités générales</span>
+        <span class="chip selected" onclick="toggleChip(this)">Tendances recrutement</span>
+        <span class="chip" onclick="toggleChip(this)">Offres stages juniors</span>
+        <span class="chip" onclick="toggleChip(this)">Nouvelles pratiques RH</span>
+        <span class="chip" onclick="toggleChip(this)">Secteurs en croissance</span>
+      </div>
+      <div class="input-row">
+        <input id="focus-cabinets" type="text" placeholder="Focus optionnel (ex: recrutement IA, France junior…)" />
+        <button class="btn-primary" id="btn-cabinets" onclick="runVeille('cabinets')">Lancer →</button>
+        <button class="btn-secondary" id="btn-processus" onclick="runProcessus()">Processus →</button>
+      </div>
+    </div>
+    <div class="results" id="results-cabinets"></div>
+  </div>
+
+  <div id="tab-libre" class="section">
+    <div class="panel">
+      <div class="panel-label">Question libre à l'agent</div>
+      <div class="input-row">
+        <input id="focus-libre" type="text" placeholder="Ex: Quels MSc Strategy ont lancé un track IA en 2024-25 ?" />
+        <button class="btn-primary" id="btn-libre" onclick="runVeille('libre')">Envoyer →</button>
+      </div>
+    </div>
+    <div class="results" id="results-libre"></div>
+  </div>
+</main>
+
+<script>
+function switchTab(name) {
+  const names = ['programmes','cabinets','libre'];
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', names[i] === name));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+}
+function toggleChip(el) { el.classList.toggle('selected'); }
+function selectAll(id)  { document.querySelectorAll('#'+id+' .chip').forEach(c => c.classList.add('selected')); }
+function selectNone(id) { document.querySelectorAll('#'+id+' .chip').forEach(c => c.classList.remove('selected')); }
+function getSelected(id) {
+  return [...document.querySelectorAll('#'+id+' .chip.selected')].map(c => c.dataset.full || c.textContent.trim());
+}
+function badgeClass(label) {
+  if (!label) return 'badge-actu';
+  const l = label.toLowerCase();
+  if (l.includes('programme') || l.includes('accréditation') || l.includes('classement')) return 'badge-prog';
+  if (l.includes('recrutement') || l.includes('rh') || l.includes('stage')) return 'badge-recru';
+  if (l.includes('croissance') || l.includes('tendance')) return 'badge-new';
+  return 'badge-actu';
+}
+function renderCards(resultats, container) {
+  if (!resultats || !resultats.length) {
+    container.innerHTML = '<div class="error-box">Aucun résultat trouvé.</div>';
+    return;
+  }
+  container.innerHTML = resultats.map(r => {
+    const name = r.programme || r.cabinet || r.nom || '';
+    const label = r.badge || 'Actualité';
+    const meta = [r.date, r.source].filter(Boolean).join(' · ');
+    const lien = r.lien ? '<a href="' + r.lien + '" target="_blank" class="result-link">→ Lire l'article</a>' : '';
+    let processusHtml = '';
+    if (r.processus) {
+      const p = r.processus;
+      const etapes = (p.etapes || []).map(e => '<div>' + e + '</div>').join('');
+      processusHtml = '<div class="processus-box">' +
+        '<div class="processus-label">Processus de recrutement</div>' +
+        '<div class="processus-etapes">' + etapes + '</div>' +
+        '<div class="processus-meta">' +
+        (p.timing ? '⏱ ' + p.timing + '&nbsp;&nbsp;' : '') +
+        (p.tests ? '📋 ' + p.tests + '&nbsp;&nbsp;' : '') +
+        (p.conseils ? '💡 ' + p.conseils : '') +
+        '</div>' +
+        (p.lien ? '<a href="' + p.lien + '" target="_blank" class="result-link">→ Page carrières</a>' : '') +
+        '</div>';
+    }
+    const titleHtml = r.lien
+      ? '<a href="' + r.lien + '" target="_blank" style="color:inherit;text-decoration:none;"><div class="result-title">' + (r.titre||'') + '</div></a>'
+      : '<div class="result-title">' + (r.titre||'') + '</div>';
+    return '<div class="result-card"><div class="result-top"><span class="badge ' + badgeClass(label) + '">' + label + '</span>' +
+      (name ? '<span class="result-name">' + name + '</span>' : '') + '</div>' +
+      titleHtml +
+      (meta ? '<div class="result-meta">' + meta + '</div>' : '') +
+      '<div class="result-body">' + (r.resume||'') + '</div>' +
+      lien + processusHtml + '</div>';
+  }).join('') + '<div class="footer-note">Résultats générés avec recherche web en temps réel</div>';
+}
+async function runProgramme(submode) {
+  const progs = getSelected('chips-programmes');
+  if (!progs.length) { alert('Sélectionne au moins un programme.'); return; }
+  const container = document.getElementById('results-programmes');
+  const btnId = submode === 'structure' ? 'btn-structure' : 'btn-cours';
+  const btn = document.getElementById(btnId);
+  const label = submode === 'structure' ? 'structure du programme (timeline)' : 'contenu des cours';
+  container.innerHTML = '<div class="loading"><div class="spinner"></div>Recherche de la ' + label + '…</div>';
+  if (btn) btn.disabled = true;
+  const urls = progs.map(p => {
+    const chip = [...document.querySelectorAll('#chips-programmes .chip.selected')].find(c => c.dataset.full === p);
+    return chip?.dataset?.url ? p + ' (' + chip.dataset.url + ')' : p;
+  }).join(' | ');
+  try {
+    const r = await fetch('/api/veille', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mode: 'programmes', submode, user: urls })
+    });
+    if (!r.ok) { container.innerHTML = '<div class="error-box">Erreur serveur</div>'; return; }
+    const data = await r.json();
+    if (data.error) { container.innerHTML = '<div class="error-box">' + data.error + '</div>'; return; }
+    renderProgrammeCards(data.resultats, container, submode);
+  } catch(err) {
+    container.innerHTML = '<div class="error-box">Erreur: ' + err.message + '</div>';
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
+function renderProgrammeCards(resultats, container, submode) {
+  if (!resultats?.length) { container.innerHTML = '<div class="error-box">Aucun résultat.</div>'; return; }
+  container.innerHTML = resultats.map(r => {
+    const name = r.nom || r.programme || '';
+    const label = r.badge || 'Programme';
+    const bc = badgeClass(label);
+    let extra = '';
+    if (submode === 'structure' && r.structure) {
+      const items = (r.structure || []).map(s =>
+        '<div class="timeline-item"><div><div class="timeline-period">' + (s.periode||'') + '</div><div class="timeline-content">' + (s.contenu||'') + '</div></div></div>'
+      ).join('');
+      extra = '<div class="timeline">' + items + '</div>';
+    } else if (submode === 'cours' && r.cours) {
+      const cats = Object.entries(r.cours);
+      extra = cats.map(([cat, liste]) =>
+        '<div class="cours-categorie">' + cat + '</div><div class="cours-grid">' +
+        (liste||[]).map(c => '<div class="cours-item">' + c + '</div>').join('') +
+        '</div>'
+      ).join('');
+    }
+    const lien = r.lien ? '<a href="' + r.lien + '" target="_blank" class="result-link">→ Voir le programme</a>' : '';
+    return '<div class="result-card"><div class="result-top"><span class="badge ' + bc + '">' + label + '</span>' +
+      (name ? '<span class="result-name">' + name + '</span>' : '') + '</div>' +
+      '<div class="result-title">' + (r.titre||'') + '</div>' +
+      '<div class="result-meta">' + (r.source||'') + '</div>' +
+      '<div class="result-body">' + (r.resume||'') + '</div>' +
+      extra + lien + '</div>';
+  }).join('') + '<div class="footer-note">Données extraites depuis les sites officiels</div>';
+}
+
+async function runProcessus() {
+  const cab = getSelected('chips-cabinets');
+  if (!cab.length) { alert('Sélectionne au moins un cabinet.'); return; }
+  const container = document.getElementById('results-cabinets');
+  const btn = document.getElementById('btn-processus');
+  container.innerHTML = '<div class="loading"><div class="spinner"></div>Recherche des processus de recrutement…</div>';
+  if (btn) btn.disabled = true;
+  try {
+    const r = await fetch('/api/veille', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mode: 'cabinets', submode: 'processus', user: 'Processus de recrutement détaillé pour: ' + cab.join(', ') + '. Étapes, timing, types de tests, conseils.' })
+    });
+    if (!r.ok) { const e = await r.text(); container.innerHTML = '<div class="error-box">Erreur: ' + e + '</div>'; return; }
+    const data = await r.json();
+    if (data.error) { container.innerHTML = '<div class="error-box">' + data.error + '</div>'; return; }
+    renderCards(data.resultats, container);
+  } catch(err) {
+    container.innerHTML = '<div class="error-box">Erreur: ' + err.message + '</div>';
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
+async function runVeille(mode) {
+  const container = document.getElementById('results-' + mode);
+  const btn = document.getElementById('btn-' + mode);
+  container.innerHTML = '<div class="loading"><div class="spinner"></div>Recherche en cours…</div>';
+  if (btn) btn.disabled = true;
+  let user = '';
+  if (mode === 'programmes') {
+    const progs = getSelected('chips-programmes');
+    const themes = getSelected('chips-themes');
+    const focus = document.getElementById('focus-programmes').value.trim();
+    if (!progs.length) { container.innerHTML = '<div class="error-box">Sélectionne au moins un programme.</div>'; if(btn) btn.disabled=false; return; }
+    user = "Veille 2024-2025 sur: " + progs.join(', ') + ". Thèmes: " + themes.join(', ') + (focus ? ". Focus: " + focus : "") + ". 1 actu récente par programme.";
+  } else if (mode === 'cabinets') {
+    const cab = getSelected('chips-cabinets');
+    const types = getSelected('chips-type');
+    const focus = document.getElementById('focus-cabinets').value.trim();
+    if (!cab.length) { container.innerHTML = '<div class="error-box">Sélectionne au moins un cabinet.</div>'; if(btn) btn.disabled=false; return; }
+    user = "Veille 2024-2025 sur: " + cab.join(', ') + ". Types: " + types.join(', ') + (focus ? ". Focus: " + focus : "") + ". 1 info récente par cabinet.";
+  } else {
+    const q = document.getElementById('focus-libre').value.trim();
+    if (!q) { container.innerHTML = '<div class="error-box">Entre une question.</div>'; if(btn) btn.disabled=false; return; }
+    user = q;
+  }
+  try {
+    const res = await fetch('/api/veille', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ mode, user }) });
+    if (!res.ok) { const err = await res.text(); container.innerHTML = '<div class="error-box">Erreur serveur (' + res.status + ') : ' + err + '</div>'; return; }
+    const data = await res.json();
+    if (data.error) { container.innerHTML = '<div class="error-box">' + data.error + '</div>'; return; }
+    renderCards(data.resultats, container);
+  } catch(err) {
+    container.innerHTML = '<div class="error-box">Erreur : ' + err.message + '</div>';
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+</script>
 </body>
 </html>
