@@ -1,4 +1,3 @@
-
 // Base de données cabinets — processus recrutement et veille
 const CABINETS = {
   "McKinsey": {
@@ -265,6 +264,94 @@ const PAYS_COMPARAISON = {
     tendance: "Singapour = destination #1 en Asie-Pacifique pour le conseil en stratégie. McKinsey, BCG et Bain y ont leurs sièges régionaux AP. Hong Kong se stabilise après plusieurs années difficiles."
   }
 };
+
+
+// Base cabinet x pays
+const CABINET_PAYS = {
+  "McKinsey": {
+    "France": { bureau: "Paris 8e", taille: "~400 consultants", secteurs: "Finance, santé, énergie, secteur public", recrutement: "~50 juniors/an, principalement HEC/X/ESSEC", specificite: "Bureau historique (1964), très actif sur les missions CAC40 et secteur public" },
+    "Allemagne": { bureau: "Berlin, Munich, Frankfurt, Cologne, Hamburg", taille: "~800 consultants", secteurs: "Industrie automobile, chimie, banque", recrutement: "Recrutement actif, profils WHU/LMU/ESMT", specificite: "Plus grand bureau européen de McKinsey. Fort dans la transformation de l'industrie auto vers l'électrique" },
+    "Royaume-Uni": { bureau: "London (siège EMEA)", taille: "~1500 consultants", secteurs: "Finance, tech, santé, gouvernement", recrutement: "Très compétitif, Oxford/Cambridge/LSE dominant", specificite: "Hub EMEA. Recrutement MBA très actif (LBS, INSEAD)" },
+    "Suisse": { bureau: "Zurich, Geneva", taille: "~200 consultants", secteurs: "Pharma, finance, luxe", recrutement: "HSG dominant, profils trillingues valorisés", specificite: "Siège de plusieurs pratiques globales (pharma, luxe)" },
+    "Moyen-Orient": { bureau: "Dubai, Riyadh, Abu Dhabi, Doha", taille: "~300 consultants", secteurs: "Infrastructure, énergie, Vision 2030", recrutement: "Souvent transfert interne depuis bureau européen", specificite: "Forte croissance liée aux projets Vision 2030 Arabie Saoudite. Bureau Riyadh en forte expansion" },
+    "Asie": { bureau: "Singapore, Hong Kong, Tokyo, Seoul", taille: "~600 consultants AP", secteurs: "Finance, tech, consumer goods, gouvernements", recrutement: "MBA INSEAD Asia dominant, NUS valorisée", specificite: "Singapore = hub Asie-Pacifique. Mandarin = atout majeur pour HK/Shanghai" }
+  },
+  "BCG": {
+    "France": { bureau: "Paris 8e", taille: "~500 consultants", secteurs: "Finance, retail, énergie, tech", recrutement: "~80 juniors/an, profils grandes écoles + ingénieurs", specificite: "Premier cabinet en volume de recrutement junior en France. Culture analytique très forte" },
+    "Allemagne": { bureau: "Munich, Berlin, Frankfurt, Düsseldorf, Hamburg, Stuttgart, Cologne", taille: "~1000 consultants", secteurs: "Industrie, tech, finance, santé", recrutement: "Très actif, recrutement massif vs McKinsey", specificite: "Siège européen à Munich. Leader du marché allemand du conseil en stratégie" },
+    "Royaume-Uni": { bureau: "London", taille: "~800 consultants", secteurs: "Finance, tech, biens de consommation", recrutement: "Oxford/Cambridge/Imperial dominant", specificite: "Concurrent direct de McKinsey London sur tous les secteurs" },
+    "Suisse": { bureau: "Zurich", taille: "~150 consultants", secteurs: "Finance, pharma, industrie", recrutement: "HSG + ETH Zurich valorisés", specificite: "Bureau en forte croissance, spécialisé pharma et services financiers" },
+    "Moyen-Orient": { bureau: "Dubai, Riyadh, Abu Dhabi", taille: "~200 consultants", secteurs: "Énergie, infrastructure, finance islamique", recrutement: "Croissance rapide, transferts internes + recrutements locaux", specificite: "Très actif sur les projets NEOM et Vision 2030. BCG Riyadh ouvert en 2019, en forte expansion" },
+    "Asie": { bureau: "Singapore, Hong Kong, Shanghai, Tokyo", taille: "~500 consultants AP", secteurs: "Tech, finance, consumer, gouvernements", recrutement: "INSEAD Singapore dominant pour seniors", specificite: "Singapore hub AP. Fort dans la tech et les fintechs asiatiques" }
+  },
+  "Bain": {
+    "France": { bureau: "Paris", taille: "~200 consultants", secteurs: "Private equity, retail, luxe, santé", recrutement: "~40 juniors/an, très sélectif", specificite: "Le plus petit des MBB à Paris. Culture team-oriented très forte. Spécialité PE unique" },
+    "Allemagne": { bureau: "Munich, Frankfurt, Berlin", taille: "~300 consultants", secteurs: "PE, industrie, retail", recrutement: "Moins présent qu'en France proportionnellement", specificite: "Réputé pour private equity advisory. Culture collaborative différente des autres MBB" },
+    "Royaume-Uni": { bureau: "London", taille: "~400 consultants", secteurs: "PE, finance, biens de consommation", recrutement: "Très sélectif, Oxbridge dominant", specificite: "Fort dans le private equity. Culture la plus 'fun' des MBB selon les classements alumni" },
+    "Suisse": { bureau: "Zurich", taille: "~80 consultants", secteurs: "Finance, pharma", recrutement: "Petit bureau, recrutement limité", specificite: "Petit bureau mais très actif en PE et pharma" },
+    "Moyen-Orient": { bureau: "Dubai", taille: "~80 consultants", secteurs: "Retail, PE, infrastructure", recrutement: "Bureau récent, en croissance", specificite: "Nouveau bureau ouvert à Montréal en 2025. Dubai hub régional Bain" },
+    "Asie": { bureau: "Singapore, Hong Kong, Tokyo, Sydney", taille: "~300 consultants AP", secteurs: "Consumer, PE, finance", recrutement: "Sélectif, profils MBA valorisés", specificite: "Singapore hub AP. Bain très fort dans le PE asiatique" }
+  },
+  "Roland Berger": {
+    "France": { bureau: "Paris", taille: "~150 consultants", secteurs: "Industrie, énergie, transport, défense", recrutement: "~30 juniors/an, profils grandes écoles", specificite: "Bureau en croissance. CA France contribue au milliard RB 2025. Fort dans défense et aéro" },
+    "Allemagne": { bureau: "Munich (siège), Berlin, Frankfurt, Hamburg, Stuttgart, Cologne", taille: "~800 consultants", secteurs: "Automobile, industrie, énergie", recrutement: "Recrutement massif, profils ingénieurs valorisés", specificite: "Siège mondial à Munich. Leader du conseil européen indépendant. Très fort dans l'auto et l'industrie" },
+    "Italie": { bureau: "Milan, Rome", taille: "~200 consultants", secteurs: "Luxe, mode, infrastructure, énergie", recrutement: "Bocconi dominant", specificite: "Fort historique en Italie, marché important pour RB" },
+    "Moyen-Orient": { bureau: "Dubai, Riyadh", taille: "~60 consultants", secteurs: "Infrastructure, énergie, industrie", recrutement: "Petit bureau, croissance", specificite: "Présence en développement, focus sur projets industriels régionaux" },
+    "Asie": { bureau: "Singapore, Hong Kong, Tokyo, Beijing", taille: "~150 consultants AP", secteurs: "Industrie, auto, tech", recrutement: "Profils bilingues valorisés", specificite: "Fort dans la transformation de l'industrie asiatique, notamment auto chinoise" }
+  },
+  "Oliver Wyman": {
+    "France": { bureau: "Paris", taille: "~250 consultants, 46 partners", secteurs: "Services financiers, assurance, tech", recrutement: "Croissance à 2 chiffres. Lancement pôle IA 2026", specificite: "Leader en Financial Services. Très actif en 2025-2026 avec recrutements senior depuis BCG et Kearney" },
+    "Royaume-Uni": { bureau: "London (siège EMEA)", taille: "~400 consultants", secteurs: "Finance, assurance, transport", recrutement: "Oxbridge + LSE dominant", specificite: "Siège EMEA. Très fort dans la réglementation bancaire et l'assurance" },
+    "Allemagne": { bureau: "Frankfurt, Munich, Berlin", taille: "~200 consultants", secteurs: "Banque, assurance, industrie", recrutement: "Profils finance valorisés", specificite: "Fort dans la restructuration bancaire et les services financiers" },
+    "Moyen-Orient": { bureau: "Dubai", taille: "~50 consultants", secteurs: "Finance islamique, infrastructure", recrutement: "Petit bureau, croissance", specificite: "Spécialité finance islamique et services financiers régionaux" },
+    "Asie": { bureau: "Singapore, Hong Kong, Tokyo", taille: "~150 consultants AP", secteurs: "Finance, assurance, tech", recrutement: "Profils finance bilingues", specificite: "Fort dans les services financiers asiatiques" }
+  }
+};
+
+
+// Tendances générales du marché du conseil 2025
+const TENDANCES_GENERALES = [
+  {
+    titre: "Ralentissement du recrutement junior : -20% en 2025 vs 2023",
+    contenu: "Selon l'étude Syntec Conseil 2024-25, le volume de recrutement dans le conseil en stratégie et management est de 20% des effectifs en 2025, contre 27% en 2024 et 33% en 2023. Les cabinets sont plus sélectifs face à une croissance atone (-2% à +1% en 2025). Certains gèlent leurs recrutements juniors, notamment un cabinet d'origine allemande (Roland Berger selon les sources sectorielles).",
+    source: "Syntec Conseil / Consultor, juin 2025"
+  },
+  {
+    titre: "L'IA générative transforme les missions et les profils recrutés",
+    contenu: "L'IA générative est devenue le service à la croissance la plus rapide dans tous les cabinets en 2025. Les MBB recrutent de plus en plus des profils hybrides (stratégie + tech). CVA alerte sur l'usage intensif de l'IA par les jeunes consultants, qui risque de réduire l'apprentissage fondamental du métier. Les cabinets tech (IBM, Accenture) en profitent davantage que les pure players stratégie.",
+    source: "Consultor / IBM / Accenture, 2025"
+  },
+  {
+    titre: "Les MBB sont-ils trop chers ? Pression sur les marges en France",
+    contenu: "Le ralentissement de l'économie française comprime les marges des clients et incite certains à la sobriété dans leurs dépenses conseil. Les questions sur la valeur des missions MBB se multiplient. En parallèle, les équipes internes stratégie des grandes entreprises grignotent des pans de conseil autrefois externalisés, phénomène dit du 'conseil interne'.",
+    source: "Consultor, mai 2026"
+  },
+  {
+    titre: "BCG résiste mieux que McKinsey et Bain en France",
+    contenu: "Dans un marché tendu, BCG maintient ses recrutements quand McKinsey et Bain ralentissent. BCG a recruté 2x plus que McKinsey et 3x plus que Bain en France sur la période 2020-2022, et conserve cet avantage en 2025. L'écart BCG/McKinsey se réduit sur le marché mondial, BCG pouvant dépasser McKinsey en volume d'activité à terme.",
+    source: "Consultor / CaseCoach, 2025"
+  },
+  {
+    titre: "Roland Berger repasse 1 milliard d'euros de CA en 2025",
+    contenu: "Roland Berger franchit la barre symbolique du milliard d'euros de chiffre d'affaires pour la seconde fois en 2025 (après 2023). Le seul grand cabinet européen indépendant résiste mieux que ses concurrents grâce à sa forte présence en industrie, énergie et défense — des secteurs porteurs en 2024-2025.",
+    source: "Consultor, mai 2026"
+  },
+  {
+    titre: "Classement Consultor 2025 : Arthur D. Little et Alvarez & Marsal font leur entrée",
+    contenu: "Le classement annuel Consultor auprès de 635 étudiants grandes écoles (HEC, ESSEC, ESCP, X, Centrale) place McKinsey, BCG et Bain en tête. 5 nouveaux cabinets entrent au classement en 2025, dont Arthur D. Little et Alvarez & Marsal. Strategy& enregistre une forte progression. Le trio MBB reste dominant mais les écarts se réduisent.",
+    source: "Classement Étudiants Consultor, juillet 2025"
+  },
+  {
+    titre: "Féminisation des partnerships : des progrès contrastés en 2026",
+    contenu: "Le classement annuel Consultor sur la féminisation des partnerships 2026 révèle des performances très contrastées entre cabinets. L'indice d'égalité professionnelle 2026 identifie les performeurs et ceux n'atteignant pas les objectifs légaux en France. Les cabinets anglosaxons performent généralement mieux que les européens continentaux.",
+    source: "Consultor, avril 2026"
+  },
+  {
+    titre: "Le conseil interne menace-t-il le conseil externe ?",
+    contenu: "Dans les grandes entreprises, des équipes internes dédiées à la stratégie grignotent des pans de conseil autrefois confiés à des cabinets externes. Cette tendance, accélérée par l'IA et la digitalisation, pousse les cabinets à repositionner leur valeur ajoutée sur les missions à forte complexité et les transformations de grande ampleur.",
+    source: "Consultor, mai 2026"
+  }
+];
 
 // Base de données des 10 programmes concurrents
 const PROGRAMMES = {
@@ -576,9 +663,25 @@ export default async function handler(req, res) {
       return res.status(200).json({ resultats: results });
     }
 
+    // TENDANCES GÉNÉRALES
+    if (submode === 'tendances') {
+      return res.status(200).json({ tendances: TENDANCES_GENERALES });
+    }
+
     // COMPARAISON PAR PAYS
     if (submode === 'pays') {
-      return res.status(200).json({ pays: PAYS_COMPARAISON });
+      const selectedCabs = (user || '').replace('comparaison pays pour: ', '').split(', ').filter(Boolean);
+      // Filtrer cabinet_pays pour les cabinets sélectionnés
+      const cabinetPays = {};
+      for (const cab of selectedCabs) {
+        for (const [key, val] of Object.entries(CABINET_PAYS)) {
+          if (cab.toLowerCase().includes(key.toLowerCase()) || key.toLowerCase().includes(cab.toLowerCase().split(' ')[0])) {
+            cabinetPays[key] = val;
+            break;
+          }
+        }
+      }
+      return res.status(200).json({ pays: PAYS_COMPARAISON, cabinetPays });
     }
 
     // PROCESSUS RECRUTEMENT
