@@ -1,3 +1,4 @@
+
 // Base de données cabinets — processus recrutement et veille
 const CABINETS = {
   "McKinsey": {
@@ -234,6 +235,34 @@ const PAYS_COMPARAISON = {
     top_ecoles: ["IE Business School", "ESADE", "IESE", "Universidad Complutense", "Universidad Autónoma de Madrid"],
     salaire_junior: "42 000 – 58 000 € (MBB) / 32 000 – 45 000 € (Tier 2)",
     tendance: "Marché en croissance. Les cabinets MBB et Tier 2 renforcent leurs équipes à Madrid et Barcelone, notamment sur les projets énergie/transition et tourisme."
+  },
+  "Suisse": {
+    marche: "Zurich + Genève. Marché très international, dominé par les cabinets MBB et les Big Four. Fort dans la finance, pharma et luxe. Salaires les plus élevés d'Europe continentale.",
+    specificites: ["St. Gallen HSG = école de référence absolue (#1 FT 14 ans de suite)", "INSEAD MBA = voie royale pour les seniors", "Trilinguisme valorisé (FR/DE/EN)", "Forte demande dans pharma (Novartis, Roche) et finance", "Permis de travail nécessaire pour non-UE"],
+    top_ecoles: ["University of St. Gallen (HSG)", "EPFL", "ETH Zurich", "IMD Lausanne", "University of Zurich"],
+    salaire_junior: "75 000 – 100 000 CHF (MBB) / 60 000 – 75 000 CHF (Tier 2)",
+    tendance: "Marché très actif malgré la cherté. McKinsey et BCG Zurich recrutent activement. Fort accent sur les profils pharma/biotech et finance depuis 2024."
+  },
+  "Pays-Bas / Scandinavie": {
+    marche: "Amsterdam (hub Pays-Bas) + Stockholm/Copenhagen/Oslo. Marchés ouverts et internationaux. Fort en tech, énergie et durabilité. Anglais universel.",
+    specificites: ["Anglais suffisant, pas besoin de néerlandais/langue locale", "Culture très flat hierarchy : moins de hiérarchie qu'en France", "Fort accent ESG et durabilité dans les missions", "Recrutement très ouvert aux profils non-locaux", "RSM Rotterdam et Copenhagen BS très bien placées"],
+    top_ecoles: ["RSM Erasmus Rotterdam", "Copenhagen Business School", "BI Norwegian Business School", "Stockholm School of Economics", "University of Amsterdam"],
+    salaire_junior: "55 000 – 70 000 € (MBB) / 42 000 – 55 000 € (Tier 2)",
+    tendance: "Marchés en croissance, portés par la transition énergétique (Shell, Equinor) et la tech (ASML, Spotify). BCG Amsterdam et McKinsey Stockholm très actifs en 2025."
+  },
+  "Moyen-Orient": {
+    marche: "Dubai (DIFC) + Abu Dhabi (ADGM) = hubs régionaux. Marchés en forte croissance portés par les fonds souverains (Mubadala, ADIA, PIF Saudi). Pas d'impôt sur le revenu.",
+    specificites: ["Salaires nets très élevés (pas d'impôt)", "Visa de travail sponsorisé par l'employeur", "Anglais = langue de travail universelle", "Forts secteurs : infrastructure, immobilier, énergie, Vision 2030 Arabie Saoudite", "Recrutement souvent via transfert interne depuis bureau européen"],
+    top_ecoles: ["INSEAD (Abu Dhabi campus)", "London Business School", "HEC Paris", "IE Business School", "American University of Beirut"],
+    salaire_junior: "150 000 – 200 000 AED/an net (MBB) ≈ 38 000 – 50 000 €",
+    tendance: "Boom du conseil lié aux Vision 2030 (Arabie Saoudite) et aux grands projets UAE. McKinsey, BCG et Roland Berger ont massivement renforcé leurs équipes Dubai/Riyad en 2024-2025."
+  },
+  "Asie": {
+    marche: "Singapour + Hong Kong = hubs régionaux Asie-Pacifique. Singapour en forte croissance post-COVID, Hong Kong en stabilisation après les turbulences politiques. Marchés très compétitifs et internationaux.",
+    specificites: ["Anglais = langue de travail, mandarin = atout majeur", "Visa Employment Pass à Singapour (conditions strictes)", "Fort dans finance, tech, consumer goods et healthcare", "Recrutement souvent MBA ou transfert interne", "NUS et NTU très valorisées localement, INSEAD Asia campus fort"],
+    top_ecoles: ["INSEAD (Singapore campus)", "NUS Business School", "HKUST Business School", "NTU Singapore", "Chinese University of Hong Kong"],
+    salaire_junior: "6 000 – 9 000 SGD/mois (MBB Singapour) ≈ 55 000 – 80 000 €/an",
+    tendance: "Singapour = destination #1 en Asie-Pacifique pour le conseil en stratégie. McKinsey, BCG et Bain y ont leurs sièges régionaux AP. Hong Kong se stabilise après plusieurs années difficiles."
   }
 };
 
