@@ -56,14 +56,184 @@ const CABINETS = {
     nom: "Roland Berger",
     lien_carrieres: "https://www.rolandberger.com/fr/Careers/",
     resume: "Seul grand cabinet de conseil en stratégie d'origine européenne (allemand). Très présent en France, Allemagne, Italie. A repassé la barre du milliard d'euros de CA en 2025.",
-    actu: { titre: "Roland Berger franchit 1 milliard d'euros de CA en 2025", date: "Mai 2026", source: "Consultor", lien: "https://www.consultor.fr/articles", resume: "Roland Berger repasse la barre du milliard d'euros de chiffre d'affaires en 2025, seuil symbolique atteint pour la seconde fois après 2023. Le cabinet continue de recruter des talents senior, notamment Eight Advisory qui recrute une associée Life Sciences chez Roland Berger." },
+    actu: { titre: "Roland Berger franchit 1 milliard d'euros de CA en 2025", date: "Mai 2026", source: "Consultor", lien: "https://www.consultor.fr", resume: "Roland Berger repasse la barre du milliard d'euros de chiffre d'affaires en 2025, seuil symbolique atteint pour la seconde fois après 2023. Eight Advisory recrute également une associée Life Sciences chez Roland Berger, signe de sa forte attractivité senior." },
     processus: {
-      etapes: ["1. Candidature en ligne (CV + lettre de motivation en français ou anglais)", "2. Entretien RH : parcours, motivation, culture Roland Berger", "3. Premier entretien : case study industrie/stratégie + questions de fit", "4. Deuxième entretien : case study plus complexe + entretien avec partner", "5. Décision sous 2-3 semaines"],
+      etapes: ["1. Candidature en ligne (CV + lettre de motivation FR ou EN)", "2. Entretien RH : parcours, motivation, culture Roland Berger", "3. Premier entretien : case study industrie/stratégie + fit questions", "4. Deuxième entretien : case study complexe + entretien partner", "5. Décision sous 2-3 semaines"],
       timing: "4 à 6 semaines",
-      tests: "Pas de test PST formalisé. Les case studies sont souvent sectoriels (industrie, énergie, automobile — secteurs forts de Roland Berger).",
-      conseils: "Roland Berger valorise les profils avec une dimension internationale et une culture européenne. Connaître les secteurs phares du cabinet (industrie, energie, santé) est un plus. Culture plus collaborative que McKinsey.",
+      tests: "Pas de test PST formalisé. Case studies souvent sectoriels (industrie, énergie, automobile).",
+      conseils: "Roland Berger valorise les profils internationaux et la culture européenne. Connaître les secteurs phares (industrie, énergie, santé) est un plus. Culture collaborative.",
       salaire_junior: "58 000 – 68 000 € brut/an (Junior Consultant)"
     }
+  },
+  "Oliver Wyman": {
+    nom: "Oliver Wyman",
+    lien_carrieres: "https://www.oliverwyman.com/careers.html",
+    resume: "Top 6 mondial, filiale de Marsh McLennan. 250 consultants à Paris, 46 partners. Spécialité forte en Financial Services. Croissance à 2 chiffres ces 10 dernières années. Lance un pôle IA-Data & Analytics en France en 2026.",
+    actu: { titre: "Oliver Wyman lance son pôle IA-Data en France et recrute chez BCG et Kearney", date: "Avril 2026", source: "Consultor", lien: "https://www.consultor.fr/articles/lex-directeur-e-commerce-et-innovation-de-carrefour-de-retour-chez-oliver-wyman-pour-prendre-la-tete-des-offres-ia", resume: "Jessyn Katchera (ex-BCG, ex-Carrefour) rejoint Oliver Wyman pour lancer son pôle Data & Analytics en France. Le cabinet recrute aussi Pierre-Alexandre Koch (ex-Kearney) pour renforcer son pôle Consommation-Télécom-Technologie, illustrant la dynamique forte du bureau de Paris." },
+    processus: {
+      etapes: ["1. Candidature en ligne — distinguer GMC (généraliste) et FS (Financial Services)", "2. Test quantitatif type GMAT (1h, 3 parties de 20 min : numérique, raisonnement déductif, inductif)", "3. Premier tour : entretien de groupe ou demi-journée d'assessment", "4. Deuxième tour : 2 entretiens individuels de 45 min (case study + fit)", "5. Troisième tour : 2 entretiens avec seniors/partners"],
+      timing: "4 à 8 semaines",
+      tests: "Test quantitatif type GMAT (mauvaises réponses pénalisantes). Distinguer les filières GMC et Financial Services dès la candidature.",
+      conseils: "Cibler la practice Financial Services si profil finance/banque. Culture analytique très forte. Mentionner les secteurs de spécialité d'OW dans la lettre de motivation.",
+      salaire_junior: "58 000 – 68 000 € brut/an"
+    }
+  },
+  "Kearney": {
+    nom: "Kearney",
+    lien_carrieres: "https://www.kearney.com/careers",
+    resume: "Top 6 mondial, reconnu pour sa stratégie opérationnelle et ses missions PMO. Fort en Grande Distribution et Luxe (Pernod-Ricard, Chanel, LVMH). Le partnership parisien est affaibli par des départs récents vers OW et d'autres cabinets.",
+    actu: { titre: "Kearney : vague de départs du partnership parisien vers la concurrence", date: "Février-Avril 2026", source: "Consultor", lien: "https://www.consultor.fr", resume: "Kearney Paris connaît une vague de départs au niveau partnership : Charles-Étienne Bost rejoint Oliver Wyman, Pierre-Alexandre Koch (patron grande conso en Europe) également. Consultor parle de 'dégringolade du partnership à Paris', fragilisant le bureau français." },
+    processus: {
+      etapes: ["1. Candidature en ligne (CV + lettre de motivation)", "2. Entretien RH : motivation, fit culturel Kearney", "3. Premier entretien : case study stratégie ou opérations + fit questions", "4. Deuxième entretien : case study avancé + entretien senior", "5. Décision finale (2-3 semaines après le dernier entretien)"],
+      timing: "4 à 6 semaines",
+      tests: "Pas de test standardisé type PST. Case studies souvent orientés opérations et secteurs industriels.",
+      conseils: "Kearney valorise la stratégie opérationnelle. Mettre en avant des expériences de mise en œuvre concrète, pas seulement d'analyse. Connaître les secteurs retail, luxe, défense.",
+      salaire_junior: "56 000 – 65 000 € brut/an"
+    }
+  },
+  "EY-Parthenon": {
+    nom: "EY-Parthenon",
+    lien_carrieres: "https://www.ey.com/fr_fr/careers",
+    resume: "Branche stratégie d'EY (Big Four). Positionné sur la stratégie, les transactions et la transformation. Recrute des profils business et finance, avec passerelles possibles vers EY Advisory.",
+    actu: { titre: "EY-Parthenon : focus sur l'IA et les transactions Life Sciences en 2025", date: "2025", source: "EY France", lien: "https://www.ey.com/fr_fr/careers/how-we-hire", resume: "EY-Parthenon publie ses tendances 2025 sur les transactions Life Sciences et la transformation publique. Le cabinet continue de recruter des jeunes diplômés et des profils expérimentés, avec un accent sur les compétences IA (EY.ai)." },
+    processus: {
+      etapes: ["1. Candidature en ligne sur ey.com/careers", "2. Tests en ligne : raisonnement logique, numérique, verbal (SHL)", "3. Entretien RH vidéo : motivation EY-Parthenon, parcours", "4. Entretien technique : case study stratégie ou transactions + fit", "5. Assessment center ou entretien final avec manager/partner"],
+      timing: "3 à 6 semaines",
+      tests: "Tests psychométriques SHL standards + case study moins intense que MBB. Focus sur les secteurs transactions (M&A, due diligence).",
+      conseils: "EY-Parthenon est une bonne entrée dans la stratégie pour des profils moins ciblés MBB. Mettre en avant l'intérêt pour les transactions et la transformation. La passerelle EY Advisory permet de diversifier.",
+      salaire_junior: "44 000 – 52 000 € brut/an (Consultant)"
+    }
+  },
+  "Accenture Strategy": {
+    nom: "Accenture Strategy",
+    lien_carrieres: "https://www.accenture.com/fr-fr/careers",
+    resume: "Branche stratégie d'Accenture (120 000 consultants mondiaux). Positionné sur la stratégie digitale, l'IA et la transformation des grandes entreprises. Fort accent sur la technologie.",
+    actu: { titre: "Accenture mise sur l'IA générative pour ses missions stratégie en France", date: "2025", source: "Accenture France", lien: "https://www.accenture.com/fr-fr/careers", resume: "Accenture Strategy accélère sur l'IA générative et les services d'automatisation. Le cabinet recrute des profils alliant compétences stratégiques et techniques, dans un contexte où les entreprises cherchent à intégrer l'IA dans leur modèle opérationnel." },
+    processus: {
+      etapes: ["1. Candidature en ligne sur accenture.com/careers", "2. Tests en ligne : raisonnement logique et numérique + test de personnalité", "3. Entretien vidéo en différé (questions enregistrées)", "4. Entretien avec consultant/manager : case study + questions comportementales", "5. Entretien final avec senior manager ou MD"],
+      timing: "3 à 6 semaines",
+      tests: "Tests cognitifs en ligne + case study moins formel que MBB. Forte dimension technologique dans les cas proposés.",
+      conseils: "Accenture Strategy valorise les profils tech-savvy. Mettre en avant des projets numériques ou IA. Moins de culture case study pur que MBB, plus d'orientation transformation.",
+      salaire_junior: "42 000 – 52 000 € brut/an (Analyst)"
+    }
+  },
+  "Sia Partners": {
+    nom: "Sia Partners",
+    lien_carrieres: "https://www.sia-partners.com/fr/carrieres",
+    resume: "Cabinet de conseil français fondé en 1999. 3 500 consultants dans 20 pays. Positionné sur la transformation digitale, l'IA et le management. Fort ancrage France avec clientèle grands groupes.",
+    actu: { titre: "Sia Partners accélère sur l'IA et les missions ESG en 2025", date: "2025", source: "Sia Partners", lien: "https://www.sia-partners.com/fr", resume: "Sia Partners renforce son positionnement IA et ESG en 2025, avec des recrutements ciblés en data science et développement durable. Le cabinet mise sur sa spécificité 'conseil augmenté par l'IA' pour se différencier des grands cabinets généralistes." },
+    processus: {
+      etapes: ["1. Candidature en ligne sur sia-partners.com/carrieres", "2. Entretien RH téléphonique : parcours, motivations, disponibilité", "3. Entretien technique : case study ou étude de cas sectorielle + questions comportementales", "4. Entretien avec manager ou senior : approfondissement technique et fit", "5. Décision (2-3 semaines)"],
+      timing: "3 à 5 semaines",
+      tests: "Pas de test standardisé. Case study moins formel que MBB. Forte dimension sectorielle (banque, assurance, énergie).",
+      conseils: "Sia Partners est accessible à des profils d'écoles de commerce moins ciblées par les MBB. Mettre en avant l'intérêt pour la transformation digitale et l'IA. Bon tremplin pour une première expérience en conseil.",
+      salaire_junior: "40 000 – 48 000 € brut/an (Consultant Junior)"
+    }
+  },
+  "Strategy&": {
+    nom: "Strategy& (PwC)",
+    lien_carrieres: "https://www.pwc.fr/fr/carrieres.html",
+    resume: "Branche stratégie de PwC, née de l'acquisition de Booz & Company en 2014. ~3 800 consultants mondiaux. Positionnée entre MBB et Big Four : missions stratégie pure avec support de PwC (transactions, fiscalité, digital).",
+    actu: { titre: "Strategy& PwC : focus sur la transformation IA et les deals en 2025-2026", date: "2025-2026", source: "PwC France", lien: "https://www.pwc.fr/fr/carrieres.html", resume: "Strategy& accélère sur les missions de transformation liées à l'IA générative et les transactions complexes. Le cabinet tire parti de l'écosystème PwC (deals, fiscalité, audit) pour proposer des offres intégrées stratégie+exécution que les MBB ne peuvent pas égaler." },
+    processus: {
+      etapes: ["1. Candidature en ligne sur pwc.fr/carrieres", "2. Tests en ligne : raisonnement logique et numérique (SHL ou Korn Ferry)", "3. Entretien RH : motivation Strategy& vs PwC Advisory, parcours", "4. Premier entretien technique : case study stratégie + fit questions", "5. Entretien final avec senior manager/partner Strategy&"],
+      timing: "3 à 6 semaines",
+      tests: "Tests psychométriques SHL + case study stratégie (moins intense que MBB mais plus rigoureux que Big Four généraliste).",
+      conseils: "Bien distinguer Strategy& (stratégie pure) de PwC Advisory (conseil généraliste). Mettre en avant l'intérêt pour l'intégration stratégie-exécution. Bon pont entre monde MBB et Big Four.",
+      salaire_junior: "46 000 – 55 000 € brut/an (Consultant)"
+    }
+  },
+  "Monitor Deloitte": {
+    nom: "Monitor Deloitte",
+    lien_carrieres: "https://www2.deloitte.com/fr/fr/careers.html",
+    resume: "Branche stratégie de Deloitte (anciennement Monitor Group, acquis en 2013). Positionnée sur la stratégie corporate, la croissance et l'innovation. Souvent citée comme la plus proche des MBB parmi les Big Four strategy arms.",
+    actu: { titre: "Monitor Deloitte : missions croissance et innovation en forte demande en 2025", date: "2025", source: "Deloitte France", lien: "https://www2.deloitte.com/fr/fr/pages/strategy-operations/topics/monitor-deloitte.html", resume: "Monitor Deloitte connaît une forte demande sur les missions de stratégie de croissance et d'innovation, portées par les entreprises cherchant à se réinventer dans un contexte d'incertitude économique. Le cabinet bénéficie du réseau Deloitte pour des missions intégrées." },
+    processus: {
+      etapes: ["1. Candidature en ligne sur deloitte.com/fr/careers", "2. Tests en ligne : raisonnement logique, numérique, verbal", "3. Entretien RH vidéo ou téléphonique : motivation Monitor vs Deloitte, parcours", "4. Entretien technique : case study stratégie conduit par le candidat (candidate-led)", "5. Entretien final avec manager/partner Monitor Deloitte"],
+      timing: "3 à 6 semaines",
+      tests: "Tests psychométriques standards + case study candidate-led (le candidat structure lui-même l'approche sans guidage, contrairement aux MBB).",
+      conseils: "Monitor Deloitte utilise des case studies candidate-led : structurer l'approche soi-même est indispensable. Rejoindre Monitor Deloitte est plus proche de BCG que de Deloitte généraliste en termes de missions.",
+      salaire_junior: "46 000 – 55 000 € brut/an (Analyst)"
+    }
+  },
+  "IBM": {
+    nom: "IBM Consulting (Strategy)",
+    lien_carrieres: "https://www.ibm.com/fr-fr/employment/",
+    resume: "Branche conseil d'IBM, 3e cabinet mondial par le CA (~21 Md$ en 2024). Positionné sur la transformation digitale, l'IA (Watson), le cloud et la stratégie technologique. Différent des cabinets de stratégie pure : fort accent sur l'implémentation.",
+    actu: { titre: "IBM Consulting mise sur l'IA générative comme moteur de croissance en 2025", date: "2025", source: "IBM France", lien: "https://www.ibm.com/fr-fr/employment/", resume: "IBM Consulting fait de l'IA générative sa principale offre de croissance en 2025. Le cabinet positionne ses consultants comme des experts de l'intégration IA dans les opérations des grandes entreprises, se différenciant des cabinets de stratégie pure par une approche tech-first." },
+    processus: {
+      etapes: ["1. Candidature en ligne sur ibm.com/employment", "2. Tests en ligne : raisonnement cognitif + évaluation situationnelle", "3. Entretien RH vidéo : compétences comportementales (STAR method)", "4. Entretien technique : cas business ou technique selon profil", "5. Assessment final ou entretien avec manager senior"],
+      timing: "4 à 8 semaines",
+      tests: "Tests cognitifs IBM + évaluation situationnelle. Entretiens très orientés compétences comportementales (méthode STAR). Moins de case study pur que MBB.",
+      conseils: "IBM Consulting convient aux profils alliant compétences business et technologiques. Mettre en avant les projets IA/data/cloud. Bon choix pour une carrière à l'intersection stratégie et tech.",
+      salaire_junior: "42 000 – 52 000 € brut/an (Consultant)"
+    }
+  },
+  "TNP Consultants": {
+    nom: "TNP Consultants",
+    lien_carrieres: "https://www.tnpconsultants.com/postuler/",
+    resume: "Cabinet de conseil français indépendant fondé en 2007. ~800 consultants. 3 pôles : TNP Strategy, TNP Trust (réglementaire/risques), TNP Digital (IA, cloud). Clients : banque, assurance, énergie, transport. Classé 4 étoiles sur consultancy.eu en France.",
+    actu: { titre: "TNP Consultants déploie l'IA sur 100 robots de processus et renforce son offre cloud", date: "2025", source: "TNP / France Num", lien: "https://www.tnpconsultants.com", resume: "TNP Consultants a mis en place un centre d'excellence Smart Automation avec ~100 robots sur deux ans pour ses clients, et déploie une gouvernance data avec 40 use cases analytiques. Le cabinet recrute des consultants spécialisés IA et cloud, avec un focus sur les secteurs banque, assurance et énergie." },
+    processus: {
+      etapes: ["1. Candidature en ligne sur tnpconsultants.com/postuler ou via cooptation", "2. Entretien RH téléphonique : parcours, motivations, disponibilité", "3. Plusieurs entretiens FIT avec des personnes de grades différents (processus long, 2-8 mois selon les retours Glassdoor)", "4. Étude de cas sectorielle (banque, assurance, digital)", "5. Décision finale — retours parfois lents selon les candidats"],
+      timing: "3 semaines à 8 mois (variable selon les équipes)",
+      tests: "Étude de cas sectorielle. Pas de test standardisé type PST.",
+      conseils: "TNP est plus accessible que les MBB mais recrute des profils sérieux en transformation. Relancer régulièrement après les entretiens (les retours peuvent être lents). Bon tremplin pour le conseil en transformation opérationnelle et digitale.",
+      salaire_junior: "38 000 – 46 000 € brut/an (Consultant Junior)"
+    }
+  },
+  "Porsche Consulting": {
+    nom: "Porsche Consulting",
+    lien_carrieres: "https://www.porsche-consulting.com/france/fr/carriere/",
+    resume: "Filiale conseil du Groupe Porsche AG. Spécialisée en stratégie opérationnelle, excellence industrielle et transformation. Bureau Paris actif avec recrutements juniors/stagiaires en pré-embauche. Anglais obligatoire.",
+    actu: { titre: "Porsche Consulting Paris : recrutements juniors en logique de pré-embauche", date: "2025", source: "Porsche Consulting France", lien: "https://www.porsche-consulting.com/france/fr/carriere/faq", resume: "Porsche Consulting Paris recrute principalement via des stages en logique de pré-embauche CDI. Le processus inclut 3 à 5 entretiens avec études de cas et test d'anglais. Le cabinet se différencie par son ADN industriel et automobile, avec des missions en excellence opérationnelle et transformation." },
+    processus: {
+      etapes: ["1. Candidature CV + lettre de motivation (email : carriere@porsche-consulting.com)", "2. Sélection sur dossier — profils grandes écoles/universités ciblés", "3. Entretiens 1 à 3 : échange profil + étude de cas (distanciel ou présentiel)", "4. Entretiens 4 à 5 avec membres seniors de l'équipe conseil", "5. Test de maîtrise de l'anglais intégré dans les entretiens — décision finale"],
+      timing: "3 à 5 semaines",
+      tests: "Études de cas à chaque entretien + test d'anglais. Pas de PST. Les cas sont souvent orientés opérations/industrie automobile.",
+      conseils: "Porsche Consulting valorise l'excellence opérationnelle et l'ADN industriel. Mettre en avant tout intérêt pour l'automobile, le manufacturing ou la transformation. La plupart des stages débouchent sur un CDI.",
+      salaire_junior: "42 000 – 50 000 € brut/an (Consultant Junior)"
+    }
+  }
+};
+
+
+// Comparaison recrutement par pays
+const PAYS_COMPARAISON = {
+  "France": {
+    marche: "Marché très concentré sur Paris (8e). Recrutement dominé par les grandes écoles (HEC, ESCP, ESSEC, X, Centrale). 70%+ des juniors MBB viennent de 7 écoles.",
+    specificites: ["Grandes écoles >>> universités pour les MBB", "Recrutement junior (bac+5) dominant (70% des embauches MBB)", "Case study en français possible chez Roland Berger et cabinets français", "Salaires légèrement inférieurs à Londres ou New York", "Forte culture du stage long (6 mois) comme voie d'entrée"],
+    top_ecoles: ["HEC Paris", "ESCP", "ESSEC", "École Polytechnique", "CentraleSupélec", "Sciences Po", "emlyon"],
+    salaire_junior: "62 000 – 75 000 € (MBB) / 40 000 – 55 000 € (Big Four stratégie)",
+    tendance: "Marché tendu en 2024-2025 : recrutements en baisse de 20% vs 33% en 2023. Sélectivité accrue. BCG résiste mieux que McKinsey et Bain."
+  },
+  "Allemagne": {
+    marche: "Marché distribué entre Munich, Francfort, Berlin, Hambourg. Roland Berger y est dominant (siège). McKinsey et BCG très actifs. Fort dans l'industrie et l'automobile.",
+    specificites: ["Grandes universités (LMU Munich, WHU, Mannheim) très valorisées", "Recrutement mixte : juniors ET Quereinsteiger (reconversions)", "Fort accent sur les secteurs industriels (auto, chimie, mécanique)", "Processus souvent en anglais même pour les postes basés en Allemagne", "Kultur : culture de rigueur analytique forte"],
+    top_ecoles: ["WHU Koblenz", "LMU Munich", "Mannheim", "HHL Leipzig", "Frankfurt School", "ESMT Berlin"],
+    salaire_junior: "55 000 – 70 000 € (MBB) / 42 000 – 52 000 € (Tier 2)",
+    tendance: "Marché dynamique malgré la récession industrielle 2024. Roland Berger et McKinsey en forte activité sur la transformation de l'industrie automobile vers l'électrique."
+  },
+  "Royaume-Uni": {
+    marche: "Londres = hub mondial du conseil. Recrutement très compétitif, international. Oxford, Cambridge, LSE dominent. Salaires les plus élevés d'Europe.",
+    specificites: ["Oxbridge + LSE + Imperial = voie royale vers MBB", "Recrutement très international : 40%+ de non-britanniques dans les promotions juniors", "MBA route bien établie (London Business School, INSEAD)", "Processus entièrement en anglais", "Culture du networking via consulting clubs"],
+    top_ecoles: ["Oxford", "Cambridge", "LSE", "Imperial College", "London Business School (MBA)", "Warwick"],
+    salaire_junior: "55 000 – 80 000 £ (MBB) / 40 000 – 55 000 £ (Tier 2)",
+    tendance: "Recrutement solide post-Brexit. Londres reste le marché le plus actif d'Europe pour le conseil en stratégie. Forte demande sur les profils IA et data."
+  },
+  "Italie": {
+    marche: "Milan = hub principal (Bocconi domine). Rome secondaire. Marché plus petit qu'en France ou Allemagne mais très actif dans les secteurs luxe, mode, agroalimentaire et infrastructure.",
+    specificites: ["Bocconi University = école quasi-exclusive pour accéder aux MBB en Italie", "Fort accent sur les secteurs luxe/mode (LVMH, Gucci, Prada) et F&B", "Processus souvent bilingue (italien + anglais)", "Stage de fin d'études = voie principale d'entrée", "Réseaux alumni très importants"],
+    top_ecoles: ["Università Bocconi", "Politecnico di Milano", "LUISS Roma", "Ca' Foscari Venezia"],
+    salaire_junior: "45 000 – 60 000 € (MBB) / 32 000 – 45 000 € (Tier 2)",
+    tendance: "Marché en croissance, porté par les transformations dans le luxe et l'énergie. McKinsey et BCG Milan recrutent activement des profils Bocconi."
+  },
+  "Espagne": {
+    marche: "Madrid + Barcelone. IE Business School = porte d'entrée principale. Marché en forte croissance, porté par le tourisme, l'énergie et les infrastructures.",
+    specificites: ["IE Business School = école de référence pour les MBB en Espagne", "ESADE (Barcelone) également très bien placée", "Fort accent sur l'Amérique Latine : un passage en Espagne ouvre souvent des portes en LatAm", "Bilinguisme espagnol/anglais valorisé", "Marchés sectoriels forts : énergie, tourisme, real estate"],
+    top_ecoles: ["IE Business School", "ESADE", "IESE", "Universidad Complutense", "Universidad Autónoma de Madrid"],
+    salaire_junior: "42 000 – 58 000 € (MBB) / 32 000 – 45 000 € (Tier 2)",
+    tendance: "Marché en croissance. Les cabinets MBB et Tier 2 renforcent leurs équipes à Madrid et Barcelone, notamment sur les projets énergie/transition et tourisme."
   }
 };
 
@@ -375,6 +545,11 @@ export default async function handler(req, res) {
         return { nom: name, badge: "Programme", titre: `Cours — ${name}`, source: "", lien: "", resume: "Données non disponibles", cours: {} };
       });
       return res.status(200).json({ resultats: results });
+    }
+
+    // COMPARAISON PAR PAYS
+    if (submode === 'pays') {
+      return res.status(200).json({ pays: PAYS_COMPARAISON });
     }
 
     // PROCESSUS RECRUTEMENT
